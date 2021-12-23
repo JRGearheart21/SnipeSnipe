@@ -1,0 +1,41 @@
+{
+  "name": "yahoo-fantasy-baseball-reader",
+  "version": "1.0.0",
+  "description": "Download your fantasy baseball data from Yahoo's API.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "league-prefix": "node getLeaguePrefix.js",
+    "test": "npx mocha",
+    "format": "eslint --fix \"$PWD/src/**/*.js\" && prettier-eslint \"$PWD/src/**/*.js\"",
+    "update": "ncu -u && npm update && rm package-lock.json && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edwarddistel/yahoo-fantasy-baseball-reader"
+  },
+  "keywords": [],
+  "author": "Edward Distel",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "node-expat": "^2.4.0",
+    "qs": "^6.10.1",
+    "ws": "^8.3.0",
+    "xml2json": "^0.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "mocha": "^9.1.2",
+    "npm-check-updates": "^12.0.2",
+    "prettier": "^2.4.1",
+    "prettier-eslint": "^8.2.2",
+    "prettier-eslint-cli": "^4.2.1"
+  }
+}

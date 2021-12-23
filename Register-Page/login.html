@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- ngrok setting is in checkForRefreshToken in dynamo.js -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+    <script src="js/amazon-cognito-identity.min.js"></script>   
+    <script src="js/config.js"></script>
+    <script src="js/dynamo.js"></script>
+
+  </head>
+    <body>
+      <form>
+        <h1>Please sign in</h1>
+        <input type="text" id="inputUsername"  placeholder="Email address" name="username" value="jgearhea@gmail.com" required autofocus>
+        <input type="password" id="inputPassword"  placeholder="Password" name="password" value="Exonian09!" required>    
+        <button type="button" onclick="signInButton()">Sign in</button>
+      </form>
+      <form>
+        <h1>Register</h1>
+        <button type="button" onclick="window.open('register.html','_self')">Register</button>
+      </form>
+      
+      <script>
+        function signInButton() {
+          var authenticationData = {
+            Username : document.getElementById("inputUsername").value,
+            Password : document.getElementById("inputPassword").value,
+          };
+          
+          var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+            
+          var poolData = {
+            UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+            ClientId : _config.cognito.clientId, // Your client id here
+          };
+          
+          var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+        
+          var userData = {
+            Username : document.getElementById("inputUsername").value,
+            Pool : userPool,
+          };
+        
+          var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+            
+          cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: function (result) {
+              var accessToken = result.getAccessToken().getJwtToken();
+              console.log(accessToken);	 //AWS AccessToken
+              
+              checkForRefreshToken(document.getElementById("inputUsername").value);
+            },
+
+            onFailure: function(err) {
+              alert(err.message || JSON.stringify(err));
+            },
+          });
+        }
+      </script>
+  </body>
+</html>

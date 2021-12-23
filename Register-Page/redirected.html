@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
+        <script src="js/dynamo.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/amazon-cognito-identity.min.js"></script>   
+
+        <title>FASniper</title>
+    </head>
+    <body>  
+        <script>
+            var urlstring=window.location.href;
+            var spliturlstring = urlstring.split('code=')[1];
+            var auth_code = spliturlstring.split('&state=')[0];
+            var user_code = spliturlstring.split('&state=')[1];
+            user_code=user_code.replace("%40","@");
+            console.log("auth :" + auth_code);
+            console.log("user :" + user_code);
+            insertUser(user_code,auth_code);
+        </script>
+
+    </body>
+</html>

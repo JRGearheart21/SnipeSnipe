@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
+        <script src="js/dynamo.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/amazon-cognito-identity.min.js"></script>   
+
+        <title>FASniper</title>
+    </head>
+    <body style="margin-top: 30px">  
+        <form>      
+            <input type="text" id="waiverPlayer"  placeholder="waiverPlayer" name="waiverPlayer" required >
+            <input type="text" id="rosterPlayer"  placeholder="rosterPlayer" name="rosterPlayer" required>    
+            <button type="button" onclick="insertItem(waiverPlayer.value,rosterPlayer.value)">Insert</button>
+        </form>
+        <form>      
+            <input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required >
+            <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
+            <button type="button" onclick="removeItem()">Remove</button>
+        </form>
+        <form>      
+            <input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
+            <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
+            <button type="button" onclick="getItem()">Get</button>
+        </form>
+        <form>      
+            <input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
+            <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
+            <button type="button" onclick="scanItem()">Scan</button>
+        </form>
+
+    </body>
+</html>

@@ -1,0 +1,9 @@
+{
+    "CONSUMER_KEY" : "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
+    "CONSUMER_SECRET" : "1486c440b69b08065a4ae8c35b94785973d26873",
+    "YAHOO_AUTH_CODE" : "",
+    "LEAGUE_KEY" : "nfl.l.53605",
+    "TEAM" : "9",
+    "AUTH_FILE" : "./credentials.json",
+    "FREE_AGENTS": "1"
+}
