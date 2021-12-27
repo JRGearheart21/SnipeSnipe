@@ -21,40 +21,72 @@ wss.on("connection", ws => {
 
   ws.on("message", dataIn => { 
       console.log("Client has sent us:" + dataIn);
+      
+      
       var auth_code = dataIn.toString().split("&&")[1];
       var user_id = dataIn.toString().split("&&")[0];
       console.log("user_id: " + user_id);
       console.log("auth_code: " + auth_code);
 
-      let newToken = getAuth(auth_code);
-      
-      newToken.then(function(result){
-        access_tokenOut = result.data.access_token;
-        refresh_tokenOut = result.data.refresh_token;
-      
-        var params = {
-          TableName: "fasniper_users",
-          Key:{
-            "fas_user_ID": user_id,
-            "AWS_client_ID": user_id,
-          },
-          UpdateExpression: "set access_token = :at, auth_code=:ac, refresh_token=:rt",
-          ExpressionAttributeValues:{
-            ":at":access_tokenOut.toString(),
-            ":ac":auth_code.toString(),
-            ":rt":refresh_tokenOut.toString()
-          }
-        };
+      if(auth_code.includes("REFRESH")){
+        var refresh_code = auth_code.split("REFRESH")[1];
 
-      setTable(params);
-    })
+        console.log(refresh_code);
+        
+        let newToken= getRefresh(refresh_code);
+
+        newToken.then(function(result){
+          console.log(result.data);
+          access_tokenOut = result.data.access_token;
+          refresh_tokenOut = result.data.refresh_token;
+        
+          var params = {
+            TableName: "fasniper_users",
+            Key:{
+              "fas_user_ID": user_id,
+              "AWS_client_ID": user_id,
+            },
+            UpdateExpression: "set access_token = :at, auth_code=:ac, refresh_token=:rt",
+            ExpressionAttributeValues:{
+              ":at":access_tokenOut.toString(),
+              ":ac":auth_code.toString(),
+              ":rt":refresh_tokenOut.toString()
+            }
+          };
+
+        setTable(params);
+        });
+      }
+      else{
+        let newToken = getAuth(auth_code);
+
+        newToken.then(function(result){
+          access_tokenOut = result.data.access_token;
+          refresh_tokenOut = result.data.refresh_token;
+        
+          var params = {
+            TableName: "fasniper_users",
+            Key:{
+              "fas_user_ID": user_id,
+              "AWS_client_ID": user_id,
+            },
+            UpdateExpression: "set access_token = :at, auth_code=:ac, refresh_token=:rt",
+            ExpressionAttributeValues:{
+              ":at":access_tokenOut.toString(),
+              ":ac":auth_code.toString(),
+              ":rt":refresh_tokenOut.toString()
+            }
+          };
+
+        setTable(params);
+        });
+      }
   });
     
   ws.on("close", () => {
     console.log("Client has disconnected");
   });
 });
-
 
 
 let getAuth = function(dataIn){
@@ -81,11 +113,32 @@ let getAuth = function(dataIn){
         });
 }
 
+let getRefresh = function(dataIn){
+  valstring = Buffer.from(`dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5:bf52e499813f8c1fb25154a58b14d6c21df4b4e0`, `binary`).toString(`base64`);
+  return axios({
+    url: `https://api.login.yahoo.com/oauth2/get_token`,
+    method: "post",
+    headers: {
+      Authorization: `Basic ${valstring}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
+    },
+    data: qs.stringify({
+      redirect_uri: "oob",
+      grant_type: "refresh_token",
+      refresh_token: dataIn
+    })
+
+
+    }).catch((err) => {
+      console.error(`Error in refreshAuthorizationToken(): ${err}`);
+    });
+}
+
 let setTable = function(params){
   
   AWS.config.update(awsConfig);
   let docClient = new AWS.DynamoDB.DocumentClient();
-  //JRGJRGJRG changed put to update and Item to Key
     docClient.update(params,function(err,data){
       if (err){
         console.log("error" + JSON.stringify(err,null,2));

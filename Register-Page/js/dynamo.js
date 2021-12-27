@@ -258,12 +258,13 @@ function checkForRefreshToken(user_id){
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
+            //JRGJRG changed refresh_token to auth_code
           checkOutval = responseOut.response.data.Item.refresh_token;
           console.log(checkOutval);
           if((checkOutval!='')&&(checkOutval!=undefined)){
             console.log("YES there's a code");
             //refresh auth token
-            window.open('profile.html','_self');
+            insertUser(user_id,"REFRESH"+checkOutval);
           }
           else{
             
@@ -273,6 +274,8 @@ function checkForRefreshToken(user_id){
             window.open('profile.html','_self');
 
           }
+          window.open('profile.html','_self');
+
         }
     });
 }   
