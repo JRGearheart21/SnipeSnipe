@@ -19,7 +19,8 @@ function insertNewUser(user_id) {
         TableName :"fasniper_users",
         Item:{
             "fas_user_ID": user_id.username,
-            "AWS_client_ID": user_id.username
+            "AWS_client_ID": user_id.username,
+            "num_leagues": 0
         }
     };
     docClient.put(params, function(err, data) {

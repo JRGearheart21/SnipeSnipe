@@ -34,12 +34,15 @@ wss.on("connection", ws => {
       
         var params = {
           TableName: "fasniper_users",
-          Item:{
+          Key:{
             "fas_user_ID": user_id,
             "AWS_client_ID": user_id,
-            "access_token":access_tokenOut,
-            "auth_code":auth_code,
-            "refresh_token":refresh_tokenOut
+          },
+          UpdateExpression: "set access_token = :at, auth_code=:ac, refresh_token=:rt",
+          ExpressionAttributeValues:{
+            ":at":access_tokenOut.toString(),
+            ":ac":auth_code.toString(),
+            ":rt":refresh_tokenOut.toString()
           }
         };
 
@@ -82,8 +85,8 @@ let setTable = function(params){
   
   AWS.config.update(awsConfig);
   let docClient = new AWS.DynamoDB.DocumentClient();
-  
-    docClient.put(params,function(err,data){
+  //JRGJRGJRG changed put to update and Item to Key
+    docClient.update(params,function(err,data){
       if (err){
         console.log("error" + JSON.stringify(err,null,2));
       }
