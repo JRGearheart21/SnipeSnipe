@@ -46,10 +46,9 @@ wss.on("connection", ws => {
               "fas_user_ID": user_id,
               "AWS_client_ID": user_id,
             },
-            UpdateExpression: "set access_token = :at, auth_code=:ac, refresh_token=:rt",
+            UpdateExpression: "set access_token = :at, refresh_token=:rt",
             ExpressionAttributeValues:{
               ":at":access_tokenOut.toString(),
-              ":ac":auth_code.toString(),
               ":rt":refresh_tokenOut.toString()
             }
           };
@@ -144,7 +143,7 @@ let setTable = function(params){
         console.log("error" + JSON.stringify(err,null,2));
       }
       else{
-        console.log("success " + JSON.stringify(data,null,2));
+        console.log("success");// " + JSON.stringify(data,null,2));
       }
     })
 
