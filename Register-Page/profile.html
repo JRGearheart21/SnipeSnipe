@@ -6,7 +6,7 @@
 	<script src="js/amazon-cognito-identity.min.js"></script>  
 	<script src="js/config.js"></script>
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
-	<script src="js/dynamo.js"></script>
+	<script src="js/leagues.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js"></script>
   </head>
 
@@ -66,13 +66,16 @@
 						return;
 					}
 					console.log('session validity: ' + session.isValid());
-					//Set the profile info
 					cognitoUser.getUserAttributes(function(err, result) {
 						if (err) {
 							console.log(err);
 							return;
 						}
-						document.getElementById("email_value").innerHTML = result[2].getValue();	
+						document.getElementById("email_value").innerHTML = result[2].getValue();
+						
+						//display leagues if any and add league button
+
+
 					});			
 				});
 			}
@@ -80,8 +83,8 @@
 
 		function signOut(){
 			if (cognitoUser != null) {
-			cognitoUser.signOut();	  
-			window.open('login.html','_self');
+				cognitoUser.signOut();	  
+				window.open('login.html','_self');
 			}
 		}
     </script>

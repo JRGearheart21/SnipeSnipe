@@ -19,24 +19,15 @@ let awsConfig = {
 wss.on("connection", ws => {
   console.log("New client connected");
 
-  ws.on("message", dataIn => { 
-      console.log("Client has sent us:" + dataIn);
-      
-      
+  ws.on("message", dataIn => {       
       var auth_code = dataIn.toString().split("&&")[1];
       var user_id = dataIn.toString().split("&&")[0];
-      console.log("user_id: " + user_id);
-      console.log("auth_code: " + auth_code);
 
       if(auth_code.includes("REFRESH")){
-        var refresh_code = auth_code.split("REFRESH")[1];
-
-        console.log(refresh_code);
-        
+        var refresh_code = auth_code.split("REFRESH")[1];        
         let newToken= getRefresh(refresh_code);
 
         newToken.then(function(result){
-          console.log(result.data);
           access_tokenOut = result.data.access_token;
           refresh_tokenOut = result.data.refresh_token;
         
