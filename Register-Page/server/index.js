@@ -21,7 +21,12 @@ wss.on("connection", ws => {
 
   ws.on("message", dataIn => { 
       console.log("Client has sent us:" + dataIn);
-      let newToken = getAuth(dataIn);
+      var auth_code = dataIn.toString().split("&&")[1];
+      var user_id = dataIn.toString().split("&&")[0];
+      console.log("user_id: " + user_id);
+      console.log("auth_code: " + auth_code);
+
+      let newToken = getAuth(auth_code);
       
       newToken.then(function(result){
         access_tokenOut = result.data.access_token;
@@ -30,10 +35,10 @@ wss.on("connection", ws => {
         var params = {
           TableName: "fasniper_users",
           Item:{
-            "fas_user_ID": "jgearhea@gmail.com",
-            "AWS_client_ID": "jgearhea@gmail.com",
+            "fas_user_ID": user_id,
+            "AWS_client_ID": user_id,
             "access_token":access_tokenOut,
-            "auth_code":dataIn,
+            "auth_code":auth_code,
             "refresh_token":refresh_tokenOut
           }
         };

@@ -10,7 +10,7 @@ function insertUser(user_id, auth_code) {
     
     ws.addEventListener("open",() => {
         console.log("We are now connected");
-        ws.send(auth_code);
+        ws.send(user_id + '&&'+ auth_code);
         window.close();
     });
      
@@ -236,7 +236,7 @@ function checkForRefreshToken(user_id){
           }
           else{
             
-            var ngrokport = 'b0e2';
+            var ngrokport = '3db9';
             console.log("NO there is not");
             window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
             window.open('profile.html','_self');
