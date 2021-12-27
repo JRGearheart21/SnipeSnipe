@@ -16,37 +16,6 @@ function insertUser(user_id, auth_code) {
      
 }
 
-/* function insertNewUser(user_id) {
-    AWS.config.update({
-        region: "us-east-2",
-        accessKeyId: "AKIASM2S677I6DGOD7OA",
-        secretAccessKey: "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"
-    });
-    var docClient = new AWS.DynamoDB.DocumentClient();
-    var data = { 
-		UserPoolId : _config.cognito.userPoolId,
-        ClientId : _config.cognito.clientId
-    };
-    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
-
-    var params = {
-        TableName :"fasniper_users",
-        Item:{
-            "fas_user_ID": user_id.username,
-            "AWS_client_ID": user_id.username
-        }
-    };
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.log("Unable to add item");
-        } else {
-            console.log(" Put User succeeded!!!!");
-            window.open('login.html','_self');
-        }
-    });
-
-} */
-
 function AWSupload(user_id,auth_code){
     AWS.config.update({
         region: "us-east-2",
@@ -267,9 +236,9 @@ function checkForRefreshToken(user_id){
           }
           else{
             
-            //var ngrokport = '985f';
+            var ngrokport = 'b0e2';
             console.log("NO there is not");
-            window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5&redirect_uri=https%3A%2F%2F3d38-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
+            window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
             window.open('profile.html','_self');
 
           }

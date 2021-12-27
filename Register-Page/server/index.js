@@ -27,8 +27,6 @@ wss.on("connection", ws => {
         access_tokenOut = result.data.access_token;
         refresh_tokenOut = result.data.refresh_token;
       
-        console.log(access_tokenOut);
-
         var params = {
           TableName: "fasniper_users",
           Item:{
