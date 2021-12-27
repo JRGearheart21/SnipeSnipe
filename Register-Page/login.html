@@ -50,7 +50,7 @@
           cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
               var accessToken = result.getAccessToken().getJwtToken();
-              console.log(accessToken);	 //AWS AccessToken
+              //console.log(accessToken);	 //AWS AccessToken
               
               checkForRefreshToken(document.getElementById("inputUsername").value);
             },
