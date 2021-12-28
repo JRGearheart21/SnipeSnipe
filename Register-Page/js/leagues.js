@@ -1,7 +1,7 @@
 src="js/amazon-cognito-identity.min.js"
 src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js"
 
-function xxxx(user_id) {
+function numLeagues(user_id) {
     AWS.config.update({
         region: "us-east-2",
         accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -16,18 +16,17 @@ function xxxx(user_id) {
 
     var params = {
         TableName :"fasniper_users",
-        Item:{
-            "fas_user_ID": user_id.username,
-            "AWS_client_ID": user_id.username,
-            "num_leagues": 0
+        Key:{
+            "fas_user_ID": user_id,
+            "AWS_client_ID": user_id
         }
     };
-    docClient.put(params, function(err, data) {
+    docClient.get(params, function(err, data) {
         if (err) {
-            console.log("Unable to add item");
+            console.log(err);
         } else {
-            console.log(" Put User succeeded!!!!");
-            window.open('login.html','_self');
+            console.log(data.Item.num_leagues);
+                //control loop for making buttons
         }
     });
 

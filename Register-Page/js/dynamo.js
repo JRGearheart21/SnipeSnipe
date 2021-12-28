@@ -45,7 +45,7 @@ function insertUser(user_id, auth_code) {
     });
      
 }
-
+/* 
 function AWSupload(user_id,auth_code){
     AWS.config.update({
         region: "us-east-2",
@@ -78,7 +78,7 @@ function AWSupload(user_id,auth_code){
         }
     }); 
     
-}
+} */
 
 function insertItem(waiverID, rosterID, priority) {
     AWS.config.update({
@@ -258,17 +258,12 @@ function checkForRefreshToken(user_id){
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
-            //JRGJRG changed refresh_token to auth_code
           checkOutval = responseOut.response.data.Item.refresh_token;
-          console.log(checkOutval);
           if((checkOutval!='')&&(checkOutval!=undefined)){
             console.log("YES there's a code");
-            //refresh auth token
             insertUser(user_id,"REFRESH"+checkOutval);
           }
           else{
-            
-            
             console.log("NO there is not");
             openVerify();
             openProfile();

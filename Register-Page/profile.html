@@ -71,8 +71,9 @@
 							console.log(err);
 							return;
 						}
-						document.getElementById("email_value").innerHTML = result[2].getValue();
-						
+						checkOutval2 = result[2].getValue();
+						document.getElementById("email_value").innerHTML = checkOutval2;
+						numLeagues(checkOutval2);
 						//display leagues if any and add league button
 
 
