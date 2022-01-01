@@ -23,21 +23,14 @@ wss.on("connection", ws => {
   ws.on("message", dataIn => {       
       var auth_code = dataIn.toString().split("&&")[1];
       var user_id = dataIn.toString().split("&&")[0];
-      console.log("user sent us: "+ dataIn)
+      //console.log("user sent us: "+ dataIn)
+      
       if(auth_code.includes("REFRESH")){
         var refresh_code = auth_code.split("REFRESH")[1];        
         let newToken= getRefresh(refresh_code);
 
         newToken.then(function(result){
-          //console.log(result);
           access_tokenOut = result.data.access_token;
-          
-          
-          //JRGJRG
-          const meta = calledFunction('nfl.l.53605',access_tokenOut);
-          //JRGJRG    
-
-
           refresh_tokenOut = result.data.refresh_token;
         
           var params = {
@@ -53,6 +46,7 @@ wss.on("connection", ws => {
             }
           };
         setTable(params);
+        
         });
       }
       else{
@@ -166,57 +160,7 @@ let setTable = function(params){
       }
       else{
         console.log("success");// " + JSON.stringify(data,null,2));
+
       }
     })
-}
-
-const getData = async(dataIn) => {
-    try {
-      // Read credentials file or get new authorization token
-      await yahoo.yfbb.readCredentials(dataIn); 
-
-      // If crededentials exist
-      if (yahoo.yfbb.CREDENTIALS) {  
-        const freeAgents = await yahoo.yfbb.getFreeAgents();
-        console.log(`Getting free agents...`);
-  
-        const allData = {
-          "free agents": freeAgents
-        };
-  
-        const data = JSON.stringify(allData);
-  
-        const outputFile = "./allMyData.json";
-  
-        // Writing to file
-        fs.writeFile(outputFile, data, { flag: "w" }, (err) => {
-          if (err) {
-            console.error(`Error in writing to ${outputFile}: ${err}`);
-          } else {
-            console.error(`Data successfully written to ${outputFile}.`);
-          }
-        });
-      }
-    } catch (err) {
-      console.error(`Error in getData(): ${err}`);
-    }
-  }
-
-const calledFunction = async(league_key,access_token) => {
-  const yf = new YahooFantasy(
-    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-    "1486c440b69b08065a4ae8c35b94785973d26873",
-  )
-  yf.setUserToken(access_token);
-
-  try {
-      const meta = await yf.league.meta(league_key);
-      sendOutMeta(meta);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-function sendOutMeta(meta){
-  console.log(meta);
 }

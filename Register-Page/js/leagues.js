@@ -25,9 +25,20 @@ function numLeagues(user_id) {
         if (err) {
             console.log(err);
         } else {
-            console.log(data.Item.num_leagues);
-                if(data.Item.num_leages > 0){
-                    displayLeagueInfo(user_id);
+            access_valOut = data.Item.access_token;
+            league_id_val=data.Item.league_id;
+            numbInt = parseInt(data.Item.num_leagues); 
+
+            if(numbInt > 0){
+                    const ws = new WebSocket("ws://localhost:443");
+    
+                    ws.addEventListener("open",() => {
+                        console.log("We are now connected");
+                        ws.send('nfl.l.'+league_id_val+'$$$'+access_valOut);
+                    });      
+
+                    functionEnd();
+
                 }
                 else{
                     console.log("No leagues");
@@ -38,11 +49,13 @@ function numLeagues(user_id) {
 } 
 
 function displayLeagueInfo(user_id){
-    
 } 
 
 
 function closeWindow(){
     window.close();
+}
+function functionEnd(){
+    console.log('hello?');
 }
 
