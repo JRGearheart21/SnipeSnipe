@@ -45,40 +45,6 @@ function insertUser(user_id, auth_code) {
     });
      
 }
-/* 
-function AWSupload(user_id,auth_code){
-    AWS.config.update({
-        region: "us-east-2",
-        accessKeyId: "AKIASM2S677I6DGOD7OA",
-        secretAccessKey: "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"
-    });
- 
-    var docClient = new AWS.DynamoDB.DocumentClient();
-
-    var data = { 
-		UserPoolId : _config.cognito.userPoolId,
-        ClientId : _config.cognito.clientId
-    };
-    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
-
-    var params = {
-        TableName :"fasniper_users",
-        Item:{
-            "fas_user_ID": user_id,
-            "AWS_client_ID": user_id,
-            "auth_code":auth_code
-        }
-    };
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.log("Unable to add item");
-        } else {
-            console.log(" Put User succeeded!!!!");
-            closeWindow();
-        }
-    }); 
-    
-} */
 
 function insertItem(waiverID, rosterID, priority) {
     AWS.config.update({
@@ -114,7 +80,6 @@ function insertItem(waiverID, rosterID, priority) {
         }
     });
 }
-
 function removeItem() {
     AWS.config.update({
        region: "us-east-2",
@@ -146,7 +111,6 @@ function removeItem() {
         }
     });
 }
-
 function getItem() {
     AWS.config.update({
        region: "us-east-2",
@@ -178,7 +142,6 @@ function getItem() {
         }
     });
 }
-
 function scanItem() {
     AWS.config.update({
        region: "us-east-2",
@@ -260,22 +223,19 @@ function checkForRefreshToken(user_id){
         } else {
           checkOutval = responseOut.response.data.Item.refresh_token;
           if((checkOutval!='')&&(checkOutval!=undefined)){
-            console.log("YES there's a code");
             insertUser(user_id,"REFRESH"+checkOutval);
           }
           else{
-            console.log("NO there is not");
             openVerify();
             openProfile();
-
           }
           openProfile();
-
         }
     });
 }   
+
 function openVerify(){
-    var ngrokport = 'f253';
+    var ngrokport = '261d';
     window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
 }
 

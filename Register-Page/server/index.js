@@ -4,6 +4,7 @@ const qs = require("qs");
 const yahoo = require("./yahooFantasyBaseball");
 const axios = require("axios");
 var AWS = require("aws-sdk");
+const YahooFantasy = require("yahoo-fantasy");
 
 var access_tokenOut = '';
 var refresh_tokenOut = '';
@@ -28,8 +29,15 @@ wss.on("connection", ws => {
         let newToken= getRefresh(refresh_code);
 
         newToken.then(function(result){
-          console.log(result);
+          //console.log(result);
           access_tokenOut = result.data.access_token;
+          
+          
+          //JRGJRG
+          const meta = calledFunction('nfl.l.53605',access_tokenOut);
+          //JRGJRG    
+
+
           refresh_tokenOut = result.data.refresh_token;
         
           var params = {
@@ -44,7 +52,6 @@ wss.on("connection", ws => {
               ":rt":refresh_tokenOut.toString()
             }
           };
-
         setTable(params);
         });
       }
@@ -104,6 +111,30 @@ let getAuth = function(dataIn){
         });
 }
 
+let displayLeagueInfo = function(dataIn){
+  valstring = Buffer.from(`dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5:bf52e499813f8c1fb25154a58b14d6c21df4b4e0`, `binary`).toString(`base64`);
+  return axios({
+    url: `https://api.login.yahoo.com/oauth2/get_token`,
+    method: "post",
+    headers: {
+      Authorization: `Basic ${valstring}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
+    },
+    data: qs.stringify({
+      client_id: "dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5",
+      client_secret: "bf52e499813f8c1fb25154a58b14d6c21df4b4e0",
+      redirect_uri: "oob",
+      code: dataIn,
+      grant_type: "authorization_code",
+    })
+
+
+    }).catch((err) => {
+      console.error(`Error in getInitialAuthorization(): ${err}`);
+    });
+}
+
 let getRefresh = function(dataIn){
   valstring = Buffer.from(`dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5:bf52e499813f8c1fb25154a58b14d6c21df4b4e0`, `binary`).toString(`base64`);
   return axios({
@@ -127,7 +158,6 @@ let getRefresh = function(dataIn){
 }
 
 let setTable = function(params){
-  
   AWS.config.update(awsConfig);
   let docClient = new AWS.DynamoDB.DocumentClient();
     docClient.update(params,function(err,data){
@@ -138,8 +168,6 @@ let setTable = function(params){
         console.log("success");// " + JSON.stringify(data,null,2));
       }
     })
-
-    
 }
 
 const getData = async(dataIn) => {
@@ -173,3 +201,22 @@ const getData = async(dataIn) => {
       console.error(`Error in getData(): ${err}`);
     }
   }
+
+const calledFunction = async(league_key,access_token) => {
+  const yf = new YahooFantasy(
+    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
+    "1486c440b69b08065a4ae8c35b94785973d26873",
+  )
+  yf.setUserToken(access_token);
+
+  try {
+      const meta = await yf.league.meta(league_key);
+      sendOutMeta(meta);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+function sendOutMeta(meta){
+  console.log(meta);
+}

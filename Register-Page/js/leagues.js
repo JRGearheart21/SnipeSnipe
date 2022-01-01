@@ -26,11 +26,21 @@ function numLeagues(user_id) {
             console.log(err);
         } else {
             console.log(data.Item.num_leagues);
-                //control loop for making buttons
+                if(data.Item.num_leages > 0){
+                    displayLeagueInfo(user_id);
+                }
+                else{
+                    console.log("No leagues");
+                }
         }
     });
 
 } 
+
+function displayLeagueInfo(user_id){
+    
+} 
+
 
 function closeWindow(){
     window.close();
