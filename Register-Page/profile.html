@@ -30,7 +30,8 @@
 	<form>      
 		<input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
 		<input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
-		<button type="button" onclick="scanItem()">Scan</button>
+		<button type="button" onclick="numLeagues(waiverPlayer4.value)">numLeagues</button>
+		<!-- <button type="button" onclick="scanItem()">Scan</button> -->
 	</form>
 
 	<div class="container">
@@ -73,10 +74,8 @@
 						}
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
-						numLeagues(checkOutval2);
-						//display leagues if any and add league button
-
-
+						document.getElementById("waiverPlayer4").value = checkOutval2;
+						//numLeagues(checkOutval2);
 					});			
 				});
 			}

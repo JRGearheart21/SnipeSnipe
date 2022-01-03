@@ -18,7 +18,6 @@ wss.on("connection", ws => {
   console.log("New client connected");
 
   ws.on("message", dataIn => {       
-    //console.log("client sent us: " + dataIn)
     var access_tokenOut = dataIn.toString().split("$$$")[1];
     var league_key = dataIn.toString().split("$$$")[0];
     const meta = calledFunction(league_key,access_tokenOut);
@@ -37,7 +36,7 @@ const calledFunction = async(league_key,access_token) => {
   yf.setUserToken(access_token);
 
   try {
-      const meta = await yf.league.meta(league_key);
+      const meta = await yf.team.meta(league_key);
       sendOutMeta(meta);
     } catch (e) {
       console.log(e);

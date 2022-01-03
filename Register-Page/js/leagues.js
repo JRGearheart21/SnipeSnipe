@@ -26,7 +26,8 @@ function numLeagues(user_id) {
             console.log(err);
         } else {
             access_valOut = data.Item.access_token;
-            league_id_val=data.Item.league_id;
+            league_id_val = data.Item.league_id;
+            team_id_val = data.Item.team_id;
             numbInt = parseInt(data.Item.num_leagues); 
 
             if(numbInt > 0){
@@ -34,7 +35,7 @@ function numLeagues(user_id) {
     
                     ws.addEventListener("open",() => {
                         console.log("We are now connected");
-                        ws.send('nfl.l.'+league_id_val+'$$$'+access_valOut);
+                        ws.send('nfl.l.'+league_id_val+'.t.'+team_id_val+'$$$'+access_valOut);
                     });      
 
                     functionEnd();
@@ -56,6 +57,6 @@ function closeWindow(){
     window.close();
 }
 function functionEnd(){
-    console.log('hello?');
+    console.log('sent to server2');
 }
 
