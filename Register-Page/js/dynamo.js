@@ -182,7 +182,7 @@ function scanItem() {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
-            const urlstring=window.location.href;
+              const urlstring=window.location.href;
             const spliturlstring = urlstring.split('code=')[1];
 
             const ws = new WebSocket("ws://localhost:8083");
@@ -195,7 +195,8 @@ function scanItem() {
             ws.on("message" , receivedData => {
                 console.log(receivedData);
                 ws.close();
-            });
+            });  
+            console.log("error"+ JSON.stringify(data));
         }
     });
 }

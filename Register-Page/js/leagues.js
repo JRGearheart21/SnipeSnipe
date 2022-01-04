@@ -45,10 +45,9 @@ function numLeagues(user_id) {
                 
                 const ws = new WebSocket("ws://localhost:443");
                     ws.addEventListener("open",() => {
-                        console.log("We are now connected");
+                        //JRG To Do update all lists
                         ws.send(''+sport_val+'.l.'+league_id_val+'.t.'+team_id_val+'$$$'+access_valOut);
                     });      
-                    //functionEnd();
             }
             else{
                 document.getElementById('addLeagueBtn').style.display = "block";
@@ -57,6 +56,44 @@ function numLeagues(user_id) {
         }
     });
 } 
+
+function getTransactions(user_id) {
+    AWS.config.update({
+       region: "us-east-2",
+       accessKeyId: "AKIASM2S677I6DGOD7OA",
+       secretAccessKey: "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"
+    });
+
+   var docClient = new AWS.DynamoDB.DocumentClient();
+
+   var data = { 
+       UserPoolId : _config.cognito.userPoolId,
+       ClientId : _config.cognito.clientId
+   };
+   var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+   var cognitoUser = userPool.getCurrentUser(); 
+
+   var params = {
+       TableName :"FAS_server_data1",
+       ProjectionExpression: "#usr,#tim",
+       FilterExpression: "#tim > :timest AND begins_with(#usr,:usern)",
+       ExpressionAttributeNames: {
+            "#usr":"FAS_user",
+            "#tim":"FAS_time"
+       },
+       ExpressionAttributeValues: {
+            ":usern":user_id,
+            ":timest": 1
+        }
+   };
+    responseOut = docClient.scan(params, function(err, data) {
+        if (err) {
+            console.log("error"+ JSON.stringify(err,null,2));
+        } else {
+           console.log(data);
+        }
+    });
+}
 
 function displayLeagueInfo(user_id){
 } 
