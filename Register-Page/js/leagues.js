@@ -48,8 +48,7 @@ function numLeagues(user_id) {
                         console.log("We are now connected");
                         ws.send(''+sport_val+'.l.'+league_id_val+'.t.'+team_id_val+'$$$'+access_valOut);
                     });      
-                    functionEnd();
-
+                    //functionEnd();
             }
             else{
                 document.getElementById('addLeagueBtn').style.display = "block";
@@ -57,7 +56,6 @@ function numLeagues(user_id) {
             }
         }
     });
-
 } 
 
 function displayLeagueInfo(user_id){
@@ -148,6 +146,11 @@ function removeLeague(user_id) {
     });
     
 } 
+
+function openLeague(){
+    window.open('league.html','_self');
+}
+
 
 function closeWindow(){
     window.close();

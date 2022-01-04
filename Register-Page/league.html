@@ -1,35 +1,88 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
-    <head>
-        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
-        <script src="js/dynamo.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/amazon-cognito-identity.min.js"></script>   
+  <head>
+    <meta charset="utf-8">
+	 <!--Cognito JavaScript-->
+	<script src="js/amazon-cognito-identity.min.js"></script>  
+	<script src="js/config.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
+	<script src="js/leagues.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js"></script>
+  </head>
 
-        <title>FASniper</title>
-    </head>
-    <body style="margin-top: 30px">  
-        <form>      
-            <input type="text" id="waiverPlayer"  placeholder="waiverPlayer" name="waiverPlayer" required >
-            <input type="text" id="rosterPlayer"  placeholder="rosterPlayer" name="rosterPlayer" required>    
-            <button type="button" onclick="insertItem(waiverPlayer.value,rosterPlayer.value)">Insert</button>
-        </form>
-        <form>      
-            <input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required >
-            <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
-            <button type="button" onclick="removeItem()">Remove</button>
-        </form>
-        <form>      
-            <input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
-            <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
-            <button type="button" onclick="getItem()">Get</button>
-        </form>
-        <form>      
-            <input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
-            <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
-            <button type="button" onclick="scanItem()">Scan</button>
-        </form>
+  <body>
+    <form>      
+        <input type="text" id="waiverPlayer"  placeholder="waiverPlayer" name="waiverPlayer" required >
+        <input type="text" id="rosterPlayer"  placeholder="rosterPlayer" name="rosterPlayer" required>    
+        <button type="button" onclick="insertItem(waiverPlayer.value,rosterPlayer.value)">Insert</button>
+    </form>
+    <form>      
+        <input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required >
+        <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
+        <button type="button" onclick="removeItem()">Remove</button>
+    </form>
+    <form>      
+        <input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
+        <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
+        <button type="button" onclick="getItem()">Get</button>
+    </form>
+    <form>      
+        <input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
+        <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
+        <button type="button" onclick="scanItem()">Scan</button>
+    </form>
 
-    </body>
+	<div class="container">
+      <div>
+        <h2>User Profile</h2>
+		<button type="button" onclick="signOut()">Sign out</button>
+      </div>
+	<div>
+
+	<h4>Personal Information</h4>
+		<br>
+		<div>
+			<label>Email <span>(Username)</span></label>
+		</div>
+		<div>
+			<label id="email_value"></label>
+		</div>
+    </div>
+
+    <script>
+		var data = { 
+			UserPoolId : _config.cognito.userPoolId,
+			ClientId : _config.cognito.clientId
+		};
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+		var cognitoUser = userPool.getCurrentUser();
+
+		window.onload = function(){
+			if (cognitoUser != null) {
+				cognitoUser.getSession(function(err, session) {
+					if (err) {
+						alert(err);
+						return;
+					}
+					console.log('session validity: ' + session.isValid());
+					cognitoUser.getUserAttributes(function(err, result) {
+						if (err) {
+							console.log(err);
+							return;
+						}
+						checkOutval2 = result[2].getValue();
+						document.getElementById("email_value").innerHTML = checkOutval2;
+					});			
+				});
+			}
+		}
+
+		function signOut(){
+			if (cognitoUser != null) {
+				cognitoUser.signOut();	  
+				window.open('login.html','_self');
+			}
+		}
+    </script>
+  </body>
 </html>

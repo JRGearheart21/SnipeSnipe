@@ -84,6 +84,7 @@ function insertItem(waiverID, rosterID, priority) {
         }
     });
 }
+
 function removeItem() {
     AWS.config.update({
        region: "us-east-2",
@@ -115,6 +116,7 @@ function removeItem() {
         }
     });
 }
+
 function getItem() {
     AWS.config.update({
        region: "us-east-2",
@@ -146,6 +148,7 @@ function getItem() {
         }
     });
 }
+
 function scanItem() {
     AWS.config.update({
        region: "us-east-2",
