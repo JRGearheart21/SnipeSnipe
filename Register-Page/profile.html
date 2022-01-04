@@ -12,26 +12,18 @@
 
   <body>
 	<form>      
-		<input type="text" id="waiverPlayer"  placeholder="waiverPlayer" name="waiverPlayer" required>
-		<input type="text" id="rosterPlayer"  placeholder="rosterPlayer" name="rosterPlayer" required>   
-		<input type="number" id="priority" placeholder=1 name="priority" required>
-		<button type="button" onclick="insertItem(waiverPlayer.value,rosterPlayer.value,priority.value)">Insert</button>
+		<input type="text" id="leage_num"  placeholder="league_num" name="league_num" required>
+		<input type="text" id="team_num"  placeholder="team_num" name="team_num" required>   
+		<input type="text" id="sport" placeholder="sport" name="sport" required>
+		<button type="button" display="none" onclick="insertLeague(checkOutval2,league_num.value,team_num.value,sport.value)" id="addLeagueBtn">Add League</button>
+		<button type="button" display="none" onclick="console.log('goToLeague')" id="goToLeague">GoToLeague</button>
+		<button type="button" display="none" onclick="removeLeague(checkOutval2)" id="removeLeagueBtn">Remove League</button>
+
 	</form>
 	<form>      
-		<input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required >
-		<input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
-		<button type="button" onclick="removeItem()">Remove</button>
-	</form>
-	<form>      
-		<input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
-		<input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
-		<button type="button" onclick="getItem()">Get</button>
-	</form>
-	<form>      
-		<input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
+		<input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required>
 		<input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
 		<button type="button" onclick="numLeagues(waiverPlayer4.value)">numLeagues</button>
-		<!-- <button type="button" onclick="scanItem()">Scan</button> -->
 	</form>
 
 	<div class="container">
@@ -60,6 +52,10 @@
 		var cognitoUser = userPool.getCurrentUser();
 
 		window.onload = function(){
+			document.getElementById('addLeagueBtn').style.display = "none";
+			document.getElementById('removeLeagueBtn').style.display = "none";
+			document.getElementById('goToLeague').style.display = "none";
+
 			if (cognitoUser != null) {
 				cognitoUser.getSession(function(err, session) {
 					if (err) {
@@ -75,7 +71,7 @@
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
 						document.getElementById("waiverPlayer4").value = checkOutval2;
-						//numLeagues(checkOutval2);
+						numLeagues(checkOutval2);
 					});			
 				});
 			}

@@ -18,9 +18,13 @@ wss.on("connection", ws => {
   console.log("New client connected");
 
   ws.on("message", dataIn => {       
-    var access_tokenOut = dataIn.toString().split("$$$")[1];
-    var league_key = dataIn.toString().split("$$$")[0];
-    const meta = calledFunction(league_key,access_tokenOut);
+    if(dataIn.includes('$$$')){
+      var access_tokenOut = dataIn.toString().split("$$$")[1];
+      var league_key = dataIn.toString().split("$$$")[0];
+      const meta = calledFunction(league_key,access_tokenOut);
+    } else{
+        ///other function within server2
+    }
   });
     
   ws.on("close", () => {
