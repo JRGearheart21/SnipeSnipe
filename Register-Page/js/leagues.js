@@ -57,7 +57,7 @@ function numLeagues(user_id) {
     });
 } 
 
-function getTransactions(user_id) {
+function getTransactions(user_id,first_val) {
     AWS.config.update({
        region: "us-east-2",
        accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -75,22 +75,24 @@ function getTransactions(user_id) {
 
    var params = {
        TableName :"FAS_server_data1",
-       ProjectionExpression: "#usr,#tim",
-       FilterExpression: "#tim > :timest AND begins_with(#usr,:usern)",
+       ProjectionExpression: "#usr,#tim,#lge",
+       FilterExpression: "#tim > :timest AND begins_with(#usr,:usern) AND begins_with(#lge,:league)",
        ExpressionAttributeNames: {
             "#usr":"FAS_user",
-            "#tim":"FAS_time"
+            "#tim":"FAS_time",
+            "#lge":"FAS_league"
        },
        ExpressionAttributeValues: {
             ":usern":user_id,
-            ":timest": 1
+            ":timest": 1,
+            ":league":first_val
         }
    };
     responseOut = docClient.scan(params, function(err, data) {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
-           console.log(data);
+           console.log(data.Items);
         }
     });
 }
@@ -184,10 +186,9 @@ function removeLeague(user_id) {
     
 } 
 
-function openLeague(){
-    window.open('league.html','_self');
+function openLeague(league_num,team_num,sport){
+    window.open('league.html?sport='+sport+'&league='+league_num+'&team_num='+team_num,'_self');
 }
-
 
 function closeWindow(){
     window.close();

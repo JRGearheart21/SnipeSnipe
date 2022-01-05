@@ -16,7 +16,7 @@
 		<input type="text" id="team_num"  placeholder="team_num" name="team_num" required>   
 		<input type="text" id="sport" placeholder="sport" name="sport" required>
 		<button type="button" display="none" onclick="insertLeague(checkOutval2,league_num.value,team_num.value,sport.value)" id="addLeagueBtn">Add League</button>
-		<button type="button" display="none" onclick="openLeague()" id="goToLeague">GoToLeague</button>
+		<button type="button" display="none" onclick="openLeague(league_num.value,team_num.value,sport.value)" id="goToLeague">GoToLeague</button>
 		<button type="button" display="none" onclick="removeLeague(checkOutval2)" id="removeLeagueBtn">Remove League</button>
 
 	</form>

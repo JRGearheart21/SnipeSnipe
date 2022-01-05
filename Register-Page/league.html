@@ -7,7 +7,6 @@
 	<script src="js/config.js"></script>
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
 	<script src="js/leagues.js"></script>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js"></script>
   </head>
 
@@ -25,13 +24,8 @@
     <form>      
         <input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
         <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
-        <button type="button" onclick="getTransactions(checkOutval2)">Scan</button>
+        <button type="button" onclick="getTransactions(checkOutval2,waiverPlayer3.value)">Scan</button>
     </form>
-    <!-- <form>      
-        <input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required >
-        <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
-        <button type="button" onclick="scanItem()">Scan</button>
-    </form> -->
 
 	<div class="container">
       <div>
@@ -71,9 +65,19 @@
 							console.log(err);
 							return;
 						}
+						else{
+						var urlstring=window.location.href;
+						var spliturlstring = urlstring.split('?')[1];
+						var first=spliturlstring.replace("sport=",'').replace("&league=",'.l.').replace("&team_num=",'.t.');
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
+						document.getElementById("waiverPlayer3").innerHTML = first;
+
+						getTransactions(checkOutval2,first);
+
+						}
 					});			
+
 				});
 			}
 		}
