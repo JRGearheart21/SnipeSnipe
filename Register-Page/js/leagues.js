@@ -59,6 +59,11 @@ function numLeagues(user_id) {
 
 function getTransactions(user_id,first_val) {
     
+    var waiverNames = ['waiverPlayer1','waiverPlayer2','waiverPlayer3','waiverPlayer4','waiverPlayer5'];
+    var rosterNames = ['rosterPlayer1','rosterPlayer2','rosterPlayer3','rosterPlayer4','rosterPlayer5'];
+    var priorityNames = ['priority1','priority2','priority3','priority4','priority5'];
+
+
     AWS.config.update({
        region: "us-east-2",
        accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -99,7 +104,12 @@ function getTransactions(user_id,first_val) {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
-           console.log(responseOut.response.data.Items);
+            console.log(responseOut.response.data.Items);
+            for(i=1;i<=responseOut.response.data.Items.length;i++){
+                document.getElementById(waiverNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].waiverPlayer;
+                document.getElementById(rosterNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].rosterPlayer;
+                document.getElementById(priorityNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_priority;
+            }
         }
     });
 }
