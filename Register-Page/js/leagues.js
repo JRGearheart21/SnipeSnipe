@@ -58,6 +58,7 @@ function numLeagues(user_id) {
 } 
 
 function getTransactions(user_id,first_val) {
+    
     AWS.config.update({
        region: "us-east-2",
        accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -75,30 +76,33 @@ function getTransactions(user_id,first_val) {
 
    var params = {
        TableName :"FAS_server_data1",
-       ProjectionExpression: "#usr,#tim,#lge",
-       FilterExpression: "#tim > :timest AND begins_with(#usr,:usern) AND begins_with(#lge,:league)",
+       ProjectionExpression: "#usr,#tim,#lge,#rpl,#pri,#wpl",
+       FilterExpression: "#tim > :timest AND begins_with(#usr,:usern) AND begins_with(#lge,:league) AND begins_with(#rpl,:rostplay) AND begins_with(#pri,:prioriT) AND begins_with(#wpl,:waivePlay)",
        ExpressionAttributeNames: {
             "#usr":"FAS_user",
             "#tim":"FAS_time",
-            "#lge":"FAS_league"
+            "#lge":"FAS_league",
+            "#rpl":"rosterPlayer",
+            "#pri":"FAS_priority",
+            "#wpl":"waiverPlayer"
        },
        ExpressionAttributeValues: {
             ":usern":user_id,
             ":timest": 1,
-            ":league":first_val
+            ":league":first_val,
+            ":rostplay":'',
+            ":prioriT":'',
+            ":waivePlay":''
         }
    };
     responseOut = docClient.scan(params, function(err, data) {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
-           console.log(data.Items);
+           console.log(responseOut.response.data.Items);
         }
     });
 }
-
-function displayLeagueInfo(user_id){
-} 
 
 function insertLeague(user_id,league_idOut,team_idOut,sport_Out) {
     document.getElementById('addLeagueBtn').style.display = "none";
@@ -197,4 +201,3 @@ function closeWindow(){
 function functionEnd(){
     console.log('sent to server2');
 }
-

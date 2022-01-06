@@ -7,24 +7,41 @@
 	<script src="js/config.js"></script>
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.244.1.min.js"></script>
 	<script src="js/leagues.js"></script>
+	<script src="js/dynamo.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js"></script>
   </head>
 
   <body>
     <form>      
-        <input type="text" id="waiverPlayer"  placeholder="waiverPlayer" name="waiverPlayer" required >
-        <input type="text" id="rosterPlayer"  placeholder="rosterPlayer" name="rosterPlayer" required>    
-        <button type="button" onclick="insertItem(waiverPlayer.value,rosterPlayer.value)">Insert</button>
+		<input type="text" id="priority1"  placeholder="1" name="priority1" required>
+		<input type="text" id="waiverPlayer1"  placeholder="waiverPlayer1" name="waiverPlayer1" required>
+        <input type="text" id="rosterPlayer1"  placeholder="rosterPlayer1" name="rosterPlayer1" required>    
     </form>
     <form>      
-        <input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required >
+		<input type="text" id="priority2"  placeholder="2" name="priority2" required>
+		<input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required>
         <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
-        <button type="button" onclick="removeItem()">Remove</button>
     </form>
     <form>      
-        <input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required >
+		<input type="text" id="priority3"  placeholder="3" name="priority3" required>
+		<input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required>
         <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
-        <button type="button" onclick="getTransactions(checkOutval2,waiverPlayer3.value)">Scan</button>
+    </form>
+    <form>      
+		<input type="text" id="priority4"  placeholder="4" name="priority4" required>
+		<input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required>
+        <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
+    </form>
+    <form>      
+		<input type="text" id="priority5"  placeholder="5" name="priority5" required>
+		<input type="text" id="waiverPlayer5"  placeholder="waiverPlayer5" name="waiverPlayer5" required>
+        <input type="text" id="rosterPlayer5"  placeholder="rosterPlayer5" name="rosterPlayer5" required>    
+    </form>
+
+    <form>        
+		<button type="button" onclick="insertItem(waiverPlayer1.value,rosterPlayer1.value, waiverPlayer3.value, priority1.value)">Insert</button>
+		<button type="button" onclick="removeItem()">Remove</button>
+		<button type="button" onclick="getTransactions(checkOutval2,league_idv.value)">Scan</button>
     </form>
 
 	<div class="container">
@@ -38,9 +55,9 @@
 		<br>
 		<div>
 			<label>Email <span>(Username)</span></label>
-		</div>
-		<div>
 			<label id="email_value"></label>
+			<label>League </label>
+			<label id="league_idv"></label>
 		</div>
     </div>
 
@@ -59,7 +76,6 @@
 						alert(err);
 						return;
 					}
-					console.log('session validity: ' + session.isValid());
 					cognitoUser.getUserAttributes(function(err, result) {
 						if (err) {
 							console.log(err);
@@ -71,13 +87,10 @@
 						var first=spliturlstring.replace("sport=",'').replace("&league=",'.l.').replace("&team_num=",'.t.');
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
-						document.getElementById("waiverPlayer3").innerHTML = first;
-
+						document.getElementById("league_idv").innerHTML = first;
 						getTransactions(checkOutval2,first);
-
 						}
 					});			
-
 				});
 			}
 		}
