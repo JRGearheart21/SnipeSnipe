@@ -21,7 +21,7 @@ wss.on("connection", ws => {
     if(dataIn.includes('$$$')){
       var access_tokenOut = dataIn.toString().split("$$$")[1];
       var league_key = dataIn.toString().split("$$$")[0];
-      const meta = calledFunction(league_key,access_tokenOut);
+      const meta = calledFunction(league_key,access_tokenOut,ws);
     } else{
         ///other function within server2
     }
@@ -32,7 +32,7 @@ wss.on("connection", ws => {
   });
 });
 
-const calledFunction = async(league_key,access_token) => {
+const calledFunction = async(league_key,access_token,ws) => {
   const yf = new YahooFantasy(
     "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
     "1486c440b69b08065a4ae8c35b94785973d26873",
@@ -41,18 +41,20 @@ const calledFunction = async(league_key,access_token) => {
 
   try {
     const meta = await yf.team.meta(league_key);
-    sendOutData(meta);
+    sendOutData(meta,ws);
   } catch (e) {
-    console.log(e);
+    console.log(e.description);
+    ws.send(e.description);
   }
-  try {
+  /* try {
     const roster = await yf.roster.players(league_key);
     sendOutData(roster);
   } catch (e) {
     console.log(e);
-  }
+  } */
 }
 
-function sendOutData(inData){
+function sendOutData(inData,ws){
   console.log(inData);
+  ws.send("WORKS");
 } 

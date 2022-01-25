@@ -39,13 +39,6 @@ function numLeagues(user_id) {
                 document.getElementById("leage_num").value = league_id_val;
                 document.getElementById("team_num").value = team_id_val;
                 document.getElementById("sport").value = sport_val;
-
-                
-                const ws = new WebSocket("ws://localhost:443");
-                    ws.addEventListener("open",() => {
-                        //JRG To Do update all lists
-                        ws.send(''+sport_val+'.l.'+league_id_val+'.t.'+team_id_val+'$$$'+access_valOut);
-                    });      
             }
             else{
                 document.getElementById('addLeagueBtn').style.display = "block";
@@ -117,6 +110,54 @@ function getTransactions(user_id,first_val) {
     });
 }
 
+function checkLeagueInfoValidity(user_id,league_idOut,team_idOut,sport_Out,access_valOut){
+    AWS.config.update({
+        region: "us-east-2",
+        accessKeyId: "AKIASM2S677I6DGOD7OA",
+        secretAccessKey: "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"
+    });
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    var data = { 
+		UserPoolId : _config.cognito.userPoolId,
+        ClientId : _config.cognito.clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+
+    var params = {
+        TableName :"fasniper_users",
+        Key:{
+            "fas_user_ID": user_id,
+            "AWS_client_ID": user_id
+        }
+    };
+    docClient.get(params, function(err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            access_valOut = data.Item.access_token;
+            const ws = new WebSocket("ws://localhost:443");
+        
+
+            ws.addEventListener("open",() => {
+                ws.send(''+sport_Out+'.l.'+league_idOut+'.t.'+team_idOut+'$$$'+access_valOut);
+            });  
+           /*  ws.addEventListener("message", () => {   //JRG this works
+               insertLeague(user_id,league_idOut,team_idOut,sport_Out);
+            });   */
+            ws.addEventListener("message", function(messageEvent) { 
+                if(messageEvent.data != "WORKS"){
+                    alert(messageEvent.data);
+                }
+                else{
+                    insertLeague(user_id,league_idOut,team_idOut,sport_Out);
+                }
+                //displayOutReturn(messageEvent.data,user_id,league_idOut,team_idOut,sport_Out);
+                //insertLeague(user_id,league_idOut,team_idOut,sport_Out); //JRG works
+             });  
+        }
+    });
+}
+
 function insertLeague(user_id,league_idOut,team_idOut,sport_Out) {
     document.getElementById('addLeagueBtn').style.display = "none";
     document.getElementById('removeLeagueBtn').style.display = "block";
@@ -158,6 +199,9 @@ function insertLeague(user_id,league_idOut,team_idOut,sport_Out) {
     
 } 
 
+function displayOutAgain(returnIn){
+    console.log("test");
+}
 function removeLeague(user_id) {
     document.getElementById('removeLeagueBtn').style.display = "none";
     document.getElementById('goToLeague').style.display = "none";
