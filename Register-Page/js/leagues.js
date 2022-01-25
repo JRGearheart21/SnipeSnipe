@@ -36,8 +36,6 @@ function numLeagues(user_id) {
                 document.getElementById('addLeagueBtn').style.display = "none";
                 document.getElementById('goToLeague').style.display = "block";
                 document.getElementById('removeLeagueBtn').style.display = "block";
-
-
                 document.getElementById("leage_num").value = league_id_val;
                 document.getElementById("team_num").value = team_id_val;
                 document.getElementById("sport").value = sport_val;
@@ -61,6 +59,7 @@ function getTransactions(user_id,first_val) {
     
     var waiverNames = ['waiverPlayer1','waiverPlayer2','waiverPlayer3','waiverPlayer4','waiverPlayer5'];
     var rosterNames = ['rosterPlayer1','rosterPlayer2','rosterPlayer3','rosterPlayer4','rosterPlayer5'];
+    var FAStimes = ['FAS_time1','FAS_time2','FAS_time3','FAS_time4','FAS_time5'];
     var priorityNames = ['priority1','priority2','priority3','priority4','priority5'];
 
 
@@ -109,6 +108,8 @@ function getTransactions(user_id,first_val) {
                 document.getElementById(waiverNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].waiverPlayer;
                 document.getElementById(rosterNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].rosterPlayer;
                 document.getElementById(priorityNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_priority;
+                document.getElementById(FAStimes[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_time;
+
             }
             //refresh roster
             

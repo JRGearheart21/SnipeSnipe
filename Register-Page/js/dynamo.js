@@ -86,7 +86,7 @@ function insertItem(waiverID, rosterID, league_id, priority) {
     });
 }
 
-function removeItem() {
+function removeItem(userVAL, time_VAL, priorityVAL) {
     AWS.config.update({
        region: "us-east-2",
        accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -105,8 +105,8 @@ function removeItem() {
    var params = {
        TableName :"FAS_server_data1",
        Key:{
-           "FAS_time":1637557634007,
-           "FAS_user": "jgearhea@gmail.com"
+           "FAS_time": parseInt(time_VAL),
+           "FAS_user": userVAL
        }
    };
     docClient.delete(params, function(err, data) {
@@ -114,6 +114,14 @@ function removeItem() {
             console.log("error"+ JSON.stringify(err,null,2));
         } else {
             console.log(" get succeeded");
+            var str_prior = priorityVAL.toString();
+            var wordsPlayer = "waiverPlayer"+str_prior;
+            var wordsRoster = "rosterPlayer"+str_prior;
+            var FAS_timePlay = "FAS_time"+str_prior;
+
+            document.getElementById(wordsPlayer).value = '';
+            document.getElementById(wordsRoster).value = '';
+            document.getElementById(FAS_timePlay).value = '';
         }
     });
 }

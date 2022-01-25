@@ -13,36 +13,54 @@
 
   <body>
     <form>      
-		<input type="text" id="priority1"  placeholder="1" name="priority1" required>
+		<input type="hidden" id="league" placeholder="league" name="league" required> 
+		<input type="hidden" id="userVAL" placeholder="userVAL" name="userVAL" required> 
+
+		
+		<input type="text" id="priority1"  value="1" name="priority1" required>
 		<input type="text" id="waiverPlayer1"  placeholder="waiverPlayer1" name="waiverPlayer1" required>
         <input type="text" id="rosterPlayer1"  placeholder="rosterPlayer1" name="rosterPlayer1" required> 
-		<input type="hidden" id="league" placeholder="league" name="league" required> 
+		<input type="hidden" id="FAS_time1" placeholder="FAS_time1" name="FAS_time1" required> 
+		<button type="button" onclick="insertItem(waiverPlayer1.value,rosterPlayer1.value, league.value, priority1.value)">Insert1</button>
+		<button type="button" onclick="removeItem(userVAL.value,FAS_time1.value,priority1.value)">Remove1</button>
     </form>
     <form>      
-		<input type="text" id="priority2"  placeholder="2" name="priority2" required>
+		<input type="text" id="priority2"  value="2" name="priority2" required>
 		<input type="text" id="waiverPlayer2"  placeholder="waiverPlayer2" name="waiverPlayer2" required>
-        <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>    
-    </form>
+        <input type="text" id="rosterPlayer2"  placeholder="rosterPlayer2" name="rosterPlayer2" required>  
+		<input type="hidden" id="FAS_time2" placeholder="FAS_time2" name="FAS_time2" required> 
+		<button type="button" onclick="insertItem(waiverPlayer2.value,rosterPlayer2.value, league.value, priority2.value)">Insert2</button>
+		<button type="button" onclick="removeItem(userVAL.value,FAS_time2.value,priority2.value)">Remove2</button>
+
+	</form>
     <form>      
-		<input type="text" id="priority3"  placeholder="3" name="priority3" required>
+		<input type="text" id="priority3"  value="3" name="priority3" required>
 		<input type="text" id="waiverPlayer3"  placeholder="waiverPlayer3" name="waiverPlayer3" required>
-        <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required>    
+        <input type="text" id="rosterPlayer3"  placeholder="rosterPlayer3" name="rosterPlayer3" required> 
+		<input type="hidden" id="FAS_time3" placeholder="FAS_time3" name="FAS_time3" required> 
+		<button type="button" onclick="insertItem(waiverPlayer3.value,rosterPlayer3.value, league.value, priority3.value)">Insert3</button>
+		<button type="button" onclick="removeItem(userVAL.value,FAS_time3.value,priority3.value)">Remove3</button>
     </form>
     <form>      
-		<input type="text" id="priority4"  placeholder="4" name="priority4" required>
+		<input type="text" id="priority4"  value="4" name="priority4" required>
 		<input type="text" id="waiverPlayer4"  placeholder="waiverPlayer4" name="waiverPlayer4" required>
-        <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>    
+        <input type="text" id="rosterPlayer4"  placeholder="rosterPlayer4" name="rosterPlayer4" required>  
+		<input type="hidden" id="FAS_time4" placeholder="FAS_time4" name="FAS_time4" required> 
+		<button type="button" onclick="insertItem(waiverPlayer4.value,rosterPlayer4.value, league.value, priority4.value)">Insert4</button>
+		<button type="button" onclick="removeItem(userVAL.value,FAS_time4.value,priority4.value)">Remove4</button>
     </form>
     <form>      
-		<input type="text" id="priority5"  placeholder="5" name="priority5" required>
+		<input type="text" id="priority5"  value="5" name="priority5" required>
 		<input type="text" id="waiverPlayer5"  placeholder="waiverPlayer5" name="waiverPlayer5" required>
         <input type="text" id="rosterPlayer5"  placeholder="rosterPlayer5" name="rosterPlayer5" required>    
+		<input type="hidden" id="FAS_time5" placeholder="FAS_time5" name="FAS_time5" required> 
+		<button type="button" onclick="insertItem(waiverPlayer5.value,rosterPlayer5.value, league.value, priority5.value)">Insert5</button>
+		<button type="button" onclick="removeItem(userVAL.value,FAS_time5.value,priority5.value)">Remove5</button>
     </form>
 
     <form>        
-		<button type="button" onclick="insertItem(waiverPlayer1.value,rosterPlayer1.value, league.value, priority1.value)">Insert</button>
-		<button type="button" onclick="removeItem()">Remove</button>
-		<button type="button" onclick="getTransactions(checkOutval2,league.value)">Scan</button>
+		<!-- <button type="button" onclick="removeItem()">Remove</button> -->
+		<!-- <button type="button" onclick="getTransactions(checkOutval2,league.value)">Scan</button> -->
     </form>
 
 	<div class="container">
@@ -95,6 +113,7 @@
 						document.getElementById("email_value").innerHTML = checkOutval2;
 						document.getElementById("league_idv").innerHTML = first;
 						document.getElementById("league").value = first;
+						document.getElementById("userVAL").value = checkOutval2;
 						getTransactions(checkOutval2,first);
 						}
 					});			
