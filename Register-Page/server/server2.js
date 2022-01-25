@@ -40,13 +40,19 @@ const calledFunction = async(league_key,access_token) => {
   yf.setUserToken(access_token);
 
   try {
-      const meta = await yf.team.meta(league_key);
-      sendOutMeta(meta);
-    } catch (e) {
-      console.log(e);
-    }
+    const meta = await yf.team.meta(league_key);
+    sendOutData(meta);
+  } catch (e) {
+    console.log(e);
   }
+  try {
+    const roster = await yf.roster.players(league_key);
+    sendOutData(roster);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-function sendOutMeta(meta){
-  console.log(meta);
+function sendOutData(inData){
+  console.log(inData);
 } 

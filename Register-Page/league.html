@@ -15,7 +15,8 @@
     <form>      
 		<input type="text" id="priority1"  placeholder="1" name="priority1" required>
 		<input type="text" id="waiverPlayer1"  placeholder="waiverPlayer1" name="waiverPlayer1" required>
-        <input type="text" id="rosterPlayer1"  placeholder="rosterPlayer1" name="rosterPlayer1" required>    
+        <input type="text" id="rosterPlayer1"  placeholder="rosterPlayer1" name="rosterPlayer1" required> 
+		<input type="hidden" id="league" placeholder="league" name="league" required> 
     </form>
     <form>      
 		<input type="text" id="priority2"  placeholder="2" name="priority2" required>
@@ -39,9 +40,9 @@
     </form>
 
     <form>        
-		<button type="button" onclick="insertItem(waiverPlayer1.value,rosterPlayer1.value, waiverPlayer3.value, priority1.value)">Insert</button>
+		<button type="button" onclick="insertItem(waiverPlayer1.value,rosterPlayer1.value, league.value, priority1.value)">Insert</button>
 		<button type="button" onclick="removeItem()">Remove</button>
-		<button type="button" onclick="getTransactions(checkOutval2,league_idv.value)">Scan</button>
+		<button type="button" onclick="getTransactions(checkOutval2,league.value)">Scan</button>
     </form>
 
 	<div class="container">
@@ -49,6 +50,11 @@
         <h2>User Profile</h2>
 		<button type="button" onclick="signOut()">Sign out</button>
       </div>
+	<div>
+	<div class="container">
+		<div>
+			<button type="button" onclick="goProfile()">Profile</button>
+		</div>
 	<div>
 
 	<h4>Personal Information</h4>
@@ -88,6 +94,7 @@
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
 						document.getElementById("league_idv").innerHTML = first;
+						document.getElementById("league").value = first;
 						getTransactions(checkOutval2,first);
 						}
 					});			
@@ -100,6 +107,9 @@
 				cognitoUser.signOut();	  
 				window.open('login.html','_self');
 			}
+		}
+		function goProfile(){	  
+			window.open('profile.html','_self');
 		}
     </script>
   </body>

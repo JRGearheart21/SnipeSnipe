@@ -110,6 +110,8 @@ function getTransactions(user_id,first_val) {
                 document.getElementById(rosterNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].rosterPlayer;
                 document.getElementById(priorityNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_priority;
             }
+            //refresh roster
+            
         }
     });
 }
