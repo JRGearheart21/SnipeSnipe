@@ -15,8 +15,6 @@
     <form>      
 		<input type="hidden" id="league" placeholder="league" name="league" required> 
 		<input type="hidden" id="userVAL" placeholder="userVAL" name="userVAL" required> 
-
-		
 		<input type="text" id="priority1"  value="1" name="priority1" required>
 		<input type="text" id="waiverPlayer1"  placeholder="waiverPlayer1" name="waiverPlayer1" required>
         <input type="text" id="rosterPlayer1"  placeholder="rosterPlayer1" name="rosterPlayer1" required> 
@@ -58,7 +56,7 @@
 		<button type="button" onclick="removeItem(userVAL.value,FAS_time5.value,priority5.value)">Remove5</button>
     </form>
 
-		<!-- <button type="button" onclick="getTransactions(checkOutval2,league.value)">Scan</button> -->
+		<button type="button" onclick="getTransactions(checkOutval2,league.value)">Refresh Waivers</button>
     </form>
 
 	<div class="container">
@@ -106,13 +104,15 @@
 						else{
 						var urlstring=window.location.href;
 						var spliturlstring = urlstring.split('?')[1];
-						var first=spliturlstring.replace("sport=",'').replace("&league=",'.l.').replace("&team_num=",'.t.');
+						var league_key=spliturlstring.replace("sport=",'').replace("&league=",'.l.').replace("&team_num=",'.t.');
 						checkOutval2 = result[2].getValue();
 						document.getElementById("email_value").innerHTML = checkOutval2;
-						document.getElementById("league_idv").innerHTML = first;
-						document.getElementById("league").value = first;
+						document.getElementById("league_idv").innerHTML = league_key;
+						document.getElementById("league").value = league_key;
 						document.getElementById("userVAL").value = checkOutval2;
-						getTransactions(checkOutval2,first);
+						getTransactions(checkOutval2,league_key);
+						getRoster(checkOutval2,league_key);
+						getWaiverPlayers(checkOutval2,league_key);
 						}
 					});			
 				});

@@ -23,7 +23,7 @@ exports.yfbb = {
   
   freeAgents(i) {
     const startNum = typeof i !== "number" || i < 0 || i > 20 ? 0 : i;
-    return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/players;status=FA;sort=PTS;position=QB`;//;status=FA;start=${startNum};sort=OR`;
+    return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/players;status=FA;sort=PTS;`//;position=QB`;//;status=FA;start=${startNum};sort=OR`;
   },
 
   // Write to an external file to display output data
@@ -118,7 +118,7 @@ exports.yfbb = {
         url,
         method: "get",
         headers: {
-          Authorization: `Bearer ${this.CREDENTIALS.access_token}`,
+          Authorization: 'Bearer jTaiBrmb5hwaJ2y11KNBHhGIT6silTKF_4nPFN.KD6Q06ahqEWMBW.eapKnqFdaHTkTeNa7N1PZszXGl8HC09xTqZqvmstQz1I25jH9QCIKRduIYFUx6lb._i5k7sXEUK0r.mQPJ1God9cDco2uvHoFHvMvoCAAvsL_jIg2gg.T7F9fcvMK2n2bThRkBIKvbPpOsDoJ6LtPDVq1WAz9YSualx3w1IJ_2Zsf2wXcWJi4e6iOUCzCpS_B823b5WuBG72Tn7v9ZPHUk2deklwfzLFrDS1S.M_2oV87RF3oxriy4Vo4YsdPDs8YDRtnwmgza3crN9xLwIfNVyBCDu2oL.DCQCOpUaYLTeoMC92RPEZQu4bnYH8nCmjCpP6l1OwwGynccvUYGztYc1pr13HppnN3_INRPcUtGrKAj0NCRDdKs19lgkMFo8Yhbi1wxJGU0Cs8Z4fewG8XPDJoR_BlQK6xMq.6rHrXaDZSXbilws0B46DlEILhMNxANDdPtHmE985_wG_UIfeRlhhioHaIS5cbVGBn.uj3tTKtNCFHbl4R8Y5JG.go4kfUX1vyM5DtBSHb5sco3oxfg1D7RvX2.3Ul.GBWacnj4Lc.TJFiJ.Sc3UyjsR0UR3QqujyjtqH.j_Pl3jygyet67q0yGcC2AsfT..8vuQB9mxNK1Kvn27A9RfvIC9EbmNllJ6NSG5cjN0wbrUWTPGFmhBquTRwg1_9ZZ.SNSjNAKAF3.Ezx3c7DGuQahFLz77q_ahLb3AcUxKaB7XCvGhWFh43.LKLWcQwEyaDk6FU16XZIXzVQ.AS8snF_j3fSGJcNL4lat9uumjFSvVNc75J_r6Z8sEPtggSRWmLOWt9bZWWS2pKKM_m1FQZW.4xLjLhbtUEacovweTebnSTN7xtI1MoVcd46_qjt59YDyKLwrLSF73CX._WjURQI6E0YdhDyESUHGRET4aOsOyuAmxPSTwReP.hNiF2q_8LoG7rLSQnTP8.JCjiulMbSBNGmveU2SJeKcVfxXophyTA8.D4KeDgFbbEouAjpPPcCeLLrsjq3Nbsopk.sgdvapyA--',
           "Content-Type": "application/x-www-form-urlencoded",
           "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
         },
@@ -250,6 +250,7 @@ exports.yfbb = {
   async getTransactions() {
     try {
       const results = await this.makeAPIrequest(this.transactions());
+      
       return results.fantasy_content.league.transactions;
     } catch (err) {
       console.error(`Error in getTransactions(): ${err}`);

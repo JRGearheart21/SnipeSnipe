@@ -48,13 +48,11 @@ function numLeagues(user_id) {
     });
 } 
 
-function getTransactions(user_id,first_val) {
-    
+function getTransactions(user_id,league_key) { 
     var waiverNames = ['waiverPlayer1','waiverPlayer2','waiverPlayer3','waiverPlayer4','waiverPlayer5'];
     var rosterNames = ['rosterPlayer1','rosterPlayer2','rosterPlayer3','rosterPlayer4','rosterPlayer5'];
     var FAStimes = ['FAS_time1','FAS_time2','FAS_time3','FAS_time4','FAS_time5'];
     var priorityNames = ['priority1','priority2','priority3','priority4','priority5'];
-
 
     AWS.config.update({
        region: "us-east-2",
@@ -86,7 +84,7 @@ function getTransactions(user_id,first_val) {
        ExpressionAttributeValues: {
             ":usern":user_id,
             ":timest": 1,
-            ":league":first_val,
+            ":league":league_key,
             ":rostplay":'',
             ":prioriT":'',
             ":waivePlay":''
@@ -102,13 +100,48 @@ function getTransactions(user_id,first_val) {
                 document.getElementById(rosterNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].rosterPlayer;
                 document.getElementById(priorityNames[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_priority;
                 document.getElementById(FAStimes[responseOut.response.data.Items[i-1].FAS_priority-1]).value=responseOut.response.data.Items[i-1].FAS_time;
-
             }
-            //refresh roster
-            
         }
     });
 }
+
+function getRoster(username,league_key1){
+    AWS.config.update({
+        region: "us-east-2",
+        accessKeyId: "AKIASM2S677I6DGOD7OA",
+        secretAccessKey: "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"
+    });
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    var data = { 
+		UserPoolId : _config.cognito.userPoolId,
+        ClientId : _config.cognito.clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+
+    var params = {
+        TableName :"fasniper_users",
+        Key:{
+            "fas_user_ID": username,
+            "AWS_client_ID": username
+        }
+    };
+    docClient.get(params, function(err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            access_valOut = data.Item.access_token;
+               const ws = new WebSocket("ws://localhost:443");
+                ws.addEventListener("open",() => {
+                    ws.send(''+league_key1+'%%%'+access_valOut);
+                });  
+                ws.addEventListener("message", function(messageEvent) { 
+                    console.log(messageEvent.data);
+                });
+        }
+    });
+}
+
+function getWaiverPlayers(){}
 
 function checkLeagueInfoValidity(user_id,league_idOut,team_idOut,sport_Out,access_valOut){
     AWS.config.update({
@@ -136,14 +169,9 @@ function checkLeagueInfoValidity(user_id,league_idOut,team_idOut,sport_Out,acces
         } else {
             access_valOut = data.Item.access_token;
             const ws = new WebSocket("ws://localhost:443");
-        
-
             ws.addEventListener("open",() => {
                 ws.send(''+sport_Out+'.l.'+league_idOut+'.t.'+team_idOut+'$$$'+access_valOut);
             });  
-           /*  ws.addEventListener("message", () => {   //JRG this works
-               insertLeague(user_id,league_idOut,team_idOut,sport_Out);
-            });   */
             ws.addEventListener("message", function(messageEvent) { 
                 if(messageEvent.data != "WORKS"){
                     alert(messageEvent.data);
@@ -151,9 +179,7 @@ function checkLeagueInfoValidity(user_id,league_idOut,team_idOut,sport_Out,acces
                 else{
                     insertLeague(user_id,league_idOut,team_idOut,sport_Out);
                 }
-                //displayOutReturn(messageEvent.data,user_id,league_idOut,team_idOut,sport_Out);
-                //insertLeague(user_id,league_idOut,team_idOut,sport_Out); //JRG works
-             });  
+            });  
         }
     });
 }
@@ -199,9 +225,6 @@ function insertLeague(user_id,league_idOut,team_idOut,sport_Out) {
     
 } 
 
-function displayOutAgain(returnIn){
-    console.log("test");
-}
 function removeLeague(user_id) {
     document.getElementById('removeLeagueBtn').style.display = "none";
     document.getElementById('goToLeague').style.display = "none";
