@@ -1,7 +1,6 @@
 const WebSocket = require("ws");
 const fs = require("fs");
 const qs = require("qs");
-//const yahoo = require("./yahooFantasyBaseball");
 const axios = require("axios");
 var AWS = require("aws-sdk");
 const YahooFantasy = require("yahoo-fantasy");
@@ -31,7 +30,7 @@ wss.on("connection", ws => {
       var league_key = dataIn.toString().split("%%%")[0];
 
       //get roster (currently gets size of roster)
-      const meta = getRoster(league_key,access_tokenOut,ws);    
+      //const meta = getRoster(league_key,access_tokenOut,ws);    
 
       //get pending claims
       //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
