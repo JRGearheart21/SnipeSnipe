@@ -3,7 +3,7 @@ const qs = require("qs");
 const axios = require("axios");
 const YahooFantasy = require("yahoo-fantasy");
 
-var access_token = '2pebcE6b5hzc4VhPU6hnp9RrsJ5jXCCXNjQ9wItnvzIrHyN0XHmGXRPYmVaueJ_vtnjXFk1yPvrKOYg_pH6L5iZmSe_7vcDvIfU7bcfpQrGWoESHfEyuxSfOtt49K1uXSdRnyUmN7abzEll5FqNN1.4RL4143h89LfaJVAurJsVgV8cEiJfd5_4Pc9I3SUmBo55zB6uUyztVGzWqy0euyt0JjyC7Z6FpQDCmDVdV8TKc70R3F45g5FWrmhmcdmfanudGkNydPbRZl7bOS_Yr_5M6PFLQJsQvzu3QKzA74S7_OrlYF5412xZDd9vEEG1HQ5hTCrjUbpSiIYCSDKh2suCot76z1PixR.X4z7HGc.NWX58jnaC7AmN4jLIp87uzR1edPGreg0mz7Yzx0gAPCH4nhaqixMPIUYuyImhpvMjizUQVRs_Pe30_HkV6ucyGyf5bxAFJuWXXCbaVchJT2sQ__pOiAdjwZiOL3d.bW45lcj81UQRsyVfjfc_c.HJIz2waOIwcc4nK8KWC4SWktFTLUZrC2WIlBmscYci2nx3haQRE3SAPvqwR5r6sQmp6xYqTfGLI81OqRHQKtwydsl_Y6rMOtFZqurG64hAYwkkHr2btw.oGs94kdecML54uYggCtNQW3YtRSazj0vUZFHJrmSAtew_sqsoCvZ21f9gtlXuZoITAIJHRP6IVVN1waR5AWuAo8IX2IHhy4BBXh_..T1Og3VPdCqaue9ifRtm3nKzeGgrcvHzOr_G4prq9VVcsnosvWqm5zGUnx2noxhNbsQDVFsouU08.ENlCHmySxxzhCmXac.YGrHYjfWlUvWYDenU1.EXz01XmQQJ6aoNZ6RhJwmTcddORIVTWeSGubPi6gw6B2P1AlfwJji.Lacv6pGh5w8j33Z_gB8sAhR6RwSVDnCk5aIX4vOIPQyLTHcJ1QDic4u2rfksswvlTiDFIJWEcC2A9fZXwVFErnEuugSFX2B5fz5NzYA2jQCkTiLKQWmcyd.S6m9g6IueX5Th9Dkv9Uw8H5iKFPpwSzJLXnPh8kDi8eXPDRsU7xSAkOFTGYA--';
+var access_token = 'l5c.XwWb5hzdgwMHJUgIyAfVHdKuqVn8ju38PyYqfdulrME6NOS7.wHc_1qsINgqFetLkAhI8K8Pd78fbJp74ZLploPZ4ckWPt3XB7VpFf4ioFByI8jVE8UkDeCfEEk8JCuiT3sCp9s9gTiO6uSDlspX0pCmZdu_sLRgqkB8iB5X5kX2uVRFEscJfWlwbczDq0ZqevbHhlUxEBe_rzcggUyAAnQcFvUof9yvPM9iI7l56._cfJcxDmhxBvcp87tXD_xXTej8Fpsj5pd2wkn9LSqX505v2wx8YaogMeTURcfUV9Gty0P9GvLg40HgIiyDcKnXGxwC38dmGs8MN4S71wTqy0qH9_H_rvbzq27RS329M5DyEwbHgYSWwyBxrZ0BH4EHet7p4s0OXQaQVuVnXOJeqLGZOBDetbGh6UnlymSQXiuXOTGkG1.i7oY2TcNKDMv.jaAhfzJJmL8ZUH3SFKvbORFAj5WXFcA7l2JJ1Ds9o6xjdcFWgEzfbOJwI7nThJ11cIgRixfKNPPv49EypwcWcvVESuQ4qjlmf2HqSyj6Uw0NAi1RO4b0OH6dzy5sV6GNyzncjPi76Z3cgaYijmlb_Fb9uV8WHH72r78E5K.znp9QUD_htT3n82JMcxUKhVh_MAOm3OxoX5HCI3aE6qjWDjj1ETAjZycjiu_JzYmAN41XbaUrOFzwBX5DhAy3jaD4bu27PYfIXs1_bb1LegvW_yaafb_e94hfCyQsegIbMOMsHzABBWeoBTs7HrGRz01tMp5pN7OMBLtQNp7VZoTaHV3V4S9LdVwf3ihNRuH5huYcwJ_CMODbMvXJPp2_lYtaQLv5pR6dRet40uP669uewzDUb3gZ.ydlG1KHWtvHSamHd9NgWHx_qgwDe4n2k6CS96W_p7jDSMaGqpWNM5zRhJJoDN8_PtIu7maQcLdrG.H8ahVgNRxQJLHFCtHGT5FUErNslaVv4YdQyGEMlNoxtbnGYoPQ41VNU9kodOKJg9HPLsZaXhX00gh1W.PQxa89_GazmEPyzVMi7Nou.01WWjOrUHw2SYEP0LSYrPXdo4ogSg--';
 var league_key = 'nfl.l.53605.t.9';
 const yf = new YahooFantasy(
   "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
@@ -20,7 +20,9 @@ const getRoster = async(league_key) => {
                   + ', name: ' + meta.roster[i].name.full
                   + ', headshot: ' + meta.roster[i].headshot.url
                   + ', team: ' + meta.roster[i].editorial_team_abbr
-                  + ', position: ' + meta.roster[i].eligible_positions
+                  + ', position: ' + meta.roster[i].display_position
+                  + ', undrop?: ' + meta.roster[i].is_undroppable
+
       );
     }
   } catch (e) {
@@ -30,32 +32,36 @@ const getRoster = async(league_key) => {
 };
 
 const getWaiverPlayersJet = async(league_key) => {
-  var count = 0;
-  const meta = await yf.league.playersJRG(league_key,1);
-  var initVAL = meta.players.length;
+  try {
+    var count = 0;
+    const meta = await yf.league.playersJRG(league_key,1);
+    var initVAL = meta.players.length;
 
-  while(initVAL == 25){
+    while(initVAL == 25){
 
-    for(i=0;i<initVAL;i++){
-      console.log('key: ' + meta.players[i].player_key
-                  + ', name: ' + meta.players[i].name.full
-                  + ', headshot: ' + meta.players[i].headshot.url
-                  + ', team: ' + meta.players[i].editorial_team_abbr
-                  + ', position: ' + meta.players[i].eligible_positions
-      );
+      for(i=0;i<initVAL;i++){
+        console.log('key: ' + meta.players[i].player_key
+                    + ', name: ' + meta.players[i].name.full
+                    + ', headshot: ' + meta.players[i].headshot.url
+                    + ', team: ' + meta.players[i].editorial_team_abbr
+                    + ', position: ' + meta.players[i].display_position
+        );
+      }
+      
+      const meta2 = await yf.league.playersJRG(league_key,26+count);
+      count = count + meta2.players.length;
+      initVAL = meta2.players.length;
     }
-    
-    const meta2 = await yf.league.playersJRG(league_key,26+count);
-    count = count + meta2.players.length;
-    initVAL = meta2.players.length;
+    console.log('number of waiver players = ' + count);
+  } catch (e) {
+    console.log(e.description);
   }
-  console.log('number of waiver players = ' + count);
 };
 
 
 yf.setUserToken(access_token);
 
 //const meta1 = yf.league.transactions(league_key);
-const meta2 = getWaiverPlayersJet(league_key);
+//const meta2 = getWaiverPlayersJet(league_key);
 
-//const metaOUT = getRoster(league_key);
+const metaOUT = getRoster(league_key);
