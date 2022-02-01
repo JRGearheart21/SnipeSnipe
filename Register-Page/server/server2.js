@@ -31,7 +31,7 @@ wss.on("connection", ws => {
       var league_key = dataIn.toString().split("%%%")[0];
 
       //get roster (currently gets size of roster)
-      //const meta = getRoster(league_key,access_tokenOut,ws);    
+      const meta = getRoster(league_key,access_tokenOut,ws);    
 
       //get pending claims
       //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
