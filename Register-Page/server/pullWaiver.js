@@ -32,9 +32,9 @@ const getRoster = async(league_key) => {
 
 const getWaiverPlayersJet = async(league_key) => {
   try {
-    var count = 0;
     var meta2 = await yf.league.playersJRG(league_key,1);
     var initVAL = meta2.players.length;
+    var count = initVAL;
 
     while(initVAL >= 1 ){
 
@@ -47,9 +47,9 @@ const getWaiverPlayersJet = async(league_key) => {
         );
       }
       
-      meta2 = await yf.league.playersJRG(league_key,26+count);
-      count = count + meta2.players.length;
+      meta2 = await yf.league.playersJRG(league_key,count+1);
       initVAL = meta2.players.length;
+      count = count + initVAL;
     }
     console.log('number of waiver players = ' + count);
   } catch (e) {
