@@ -33,21 +33,21 @@ const getRoster = async(league_key) => {
 const getWaiverPlayersJet = async(league_key) => {
   try {
     var count = 0;
-    const meta = await yf.league.playersJRG(league_key,1);
-    var initVAL = meta.players.length;
+    var meta2 = await yf.league.playersJRG(league_key,1);
+    var initVAL = meta2.players.length;
 
-    while(initVAL == 25){
+    while(initVAL >= 1 ){
 
       for(i=0;i<initVAL;i++){
-        console.log('key: ' + meta.players[i].player_key
-          + ', name: ' + meta.players[i].name.full
-          + ', headshot: ' + meta.players[i].headshot.url
-          + ', team: ' + meta.players[i].editorial_team_abbr
-          + ', position: ' + meta.players[i].display_position
+        console.log('key: ' + meta2.players[i].player_key
+          + ', name: ' + meta2.players[i].name.full
+          + ', headshot: ' + meta2.players[i].headshot.url
+          + ', team: ' + meta2.players[i].editorial_team_abbr
+          + ', position: ' + meta2.players[i].display_position
         );
       }
       
-      const meta2 = await yf.league.playersJRG(league_key,26+count);
+      meta2 = await yf.league.playersJRG(league_key,26+count);
       count = count + meta2.players.length;
       initVAL = meta2.players.length;
     }
@@ -122,8 +122,8 @@ newToken.then(function(result){
 
   yf.setUserToken(access_tokenOut);
 
-  const metaOUT = getRoster(league_key);
-  //const meta2 = getWaiverPlayersJet(league_key);
+  //const metaOUT = getRoster(league_key);
+  const meta2 = getWaiverPlayersJet(league_key);
 
 });
 
