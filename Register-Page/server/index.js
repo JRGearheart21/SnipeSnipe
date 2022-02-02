@@ -160,9 +160,6 @@ let setTable = function(params){
       }
       else{
         console.log("success");// " + JSON.stringify(data,null,2));
-        //ws.send("hi");
-
-
       }
     })
 }

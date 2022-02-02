@@ -11,13 +11,6 @@ let awsConfig = {
   "secretAccessKey":"8u5WEJ2LRUFWEZpk4g6RpzKQvIwUZHHSFTnk5439"
 };
 
-var access_token = 'l5c.XwWb5hzdgwMHJUgIyAfVHdKuqVn8ju38PyYqfdulrME6NOS7.wHc_1qsINgqFetLkAhI8K8Pd78fbJp74ZLploPZ4ckWPt3XB7VpFf4ioFByI8jVE8UkDeCfEEk8JCuiT3sCp9s9gTiO6uSDlspX0pCmZdu_sLRgqkB8iB5X5kX2uVRFEscJfWlwbczDq0ZqevbHhlUxEBe_rzcggUyAAnQcFvUof9yvPM9iI7l56._cfJcxDmhxBvcp87tXD_xXTej8Fpsj5pd2wkn9LSqX505v2wx8YaogMeTURcfUV9Gty0P9GvLg40HgIiyDcKnXGxwC38dmGs8MN4S71wTqy0qH9_H_rvbzq27RS329M5DyEwbHgYSWwyBxrZ0BH4EHet7p4s0OXQaQVuVnXOJeqLGZOBDetbGh6UnlymSQXiuXOTGkG1.i7oY2TcNKDMv.jaAhfzJJmL8ZUH3SFKvbORFAj5WXFcA7l2JJ1Ds9o6xjdcFWgEzfbOJwI7nThJ11cIgRixfKNPPv49EypwcWcvVESuQ4qjlmf2HqSyj6Uw0NAi1RO4b0OH6dzy5sV6GNyzncjPi76Z3cgaYijmlb_Fb9uV8WHH72r78E5K.znp9QUD_htT3n82JMcxUKhVh_MAOm3OxoX5HCI3aE6qjWDjj1ETAjZycjiu_JzYmAN41XbaUrOFzwBX5DhAy3jaD4bu27PYfIXs1_bb1LegvW_yaafb_e94hfCyQsegIbMOMsHzABBWeoBTs7HrGRz01tMp5pN7OMBLtQNp7VZoTaHV3V4S9LdVwf3ihNRuH5huYcwJ_CMODbMvXJPp2_lYtaQLv5pR6dRet40uP669uewzDUb3gZ.ydlG1KHWtvHSamHd9NgWHx_qgwDe4n2k6CS96W_p7jDSMaGqpWNM5zRhJJoDN8_PtIu7maQcLdrG.H8ahVgNRxQJLHFCtHGT5FUErNslaVv4YdQyGEMlNoxtbnGYoPQ41VNU9kodOKJg9HPLsZaXhX00gh1W.PQxa89_GazmEPyzVMi7Nou.01WWjOrUHw2SYEP0LSYrPXdo4ogSg--';
-var league_key = 'nfl.l.53605.t.9';
-const yf = new YahooFantasy(
-  "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-  "1486c440b69b08065a4ae8c35b94785973d26873",
-)
-
 const getRoster = async(league_key) => {
   try {
     meta = await yf.roster.players(league_key);
@@ -64,8 +57,73 @@ const getWaiverPlayersJet = async(league_key) => {
   }
 };
 
-yf.setUserToken(access_token);
+let getRefresh = function(dataIn){
+  valstring = Buffer.from(`dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5:bf52e499813f8c1fb25154a58b14d6c21df4b4e0`, `binary`).toString(`base64`);
+  return axios({
+    url: `https://api.login.yahoo.com/oauth2/get_token`,
+    method: "post",
+    headers: {
+      Authorization: `Basic ${valstring}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
+    },
+    data: qs.stringify({
+      redirect_uri: "oob",
+      grant_type: "refresh_token",
+      refresh_token: dataIn
+    })
 
-//const meta2 = getWaiverPlayersJet(league_key);
 
-const metaOUT = getRoster(league_key);
+    }).catch((err) => {
+      console.error(`Error in refreshAuthorizationToken(): ${err}`);
+    });
+}
+
+let setTable = function(params){
+  AWS.config.update(awsConfig);
+  let docClient = new AWS.DynamoDB.DocumentClient();
+    docClient.update(params,function(err,data){
+      if (err){
+        console.log("error" + JSON.stringify(err,null,2));
+      }
+      else{
+        console.log("success");// " + JSON.stringify(data,null,2));
+      }
+    })
+}
+
+var league_key = 'nfl.l.53605.t.9';
+
+const yf = new YahooFantasy(
+  "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
+  "1486c440b69b08065a4ae8c35b94785973d26873",
+)
+
+user_id = 'jgearhea@gmail.com';
+
+let newToken = getRefresh('AAE6y2HfIxKmf7NpFWQnGFhS0h_zHXHINwtW7jwvQXKGOU.pcZM1Y_tS0MY-');
+
+newToken.then(function(result){
+  access_tokenOut = result.data.access_token;
+  refresh_tokenOut = result.data.refresh_token;
+  var params = {
+    TableName: "fasniper_users",
+    Key:{
+      "fas_user_ID": user_id,
+      "AWS_client_ID": user_id,
+    },
+    UpdateExpression: "set access_token = :at, refresh_token=:rt",
+    ExpressionAttributeValues:{
+      ":at":access_tokenOut.toString(),
+      ":rt":refresh_tokenOut.toString()
+    }
+  };
+  setTable(params);
+
+  yf.setUserToken(access_tokenOut);
+
+  const metaOUT = getRoster(league_key);
+  //const meta2 = getWaiverPlayersJet(league_key);
+
+});
+
