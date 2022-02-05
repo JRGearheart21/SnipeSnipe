@@ -30,6 +30,26 @@ const getRoster = async(league_key) => {
   }
 };
 
+const getTransX = async(league_key,timeStampIn) => {
+  try {
+    meta = await yf.league.transactions2(league_key);
+    for(i=0; (parseInt(meta.transactions[i].timestamp)>timeStampIn) ;i++){
+      var strType = meta.transactions[i].type;
+      lastBox = meta.transactions[i].players.length - 1;
+
+      if(strType.includes('drop')){
+        console.log('key: ' + meta.transactions[i].players[lastBox].player_key
+        + ', name: ' + meta.transactions[i].players[lastBox].name.full
+        + ', team: ' + meta.transactions[i].players[lastBox].editorial_team_abbr
+        + ', position: ' + meta.transactions[i].players[lastBox].display_position        
+        );
+      }
+    } 
+  } catch (e) {
+    console.log(e.description);
+  }
+};
+
 const getWaiverPlayersJet = async(league_key) => {
   try {
     var meta2 = await yf.league.playersJRG(league_key,1);
@@ -72,11 +92,9 @@ let getRefresh = function(dataIn){
       grant_type: "refresh_token",
       refresh_token: dataIn
     })
-
-
-    }).catch((err) => {
-      console.error(`Error in refreshAuthorizationToken(): ${err}`);
-    });
+  }).catch((err) => {
+    console.error(`Error in refreshAuthorizationToken(): ${err}`);
+  });
 }
 
 let setTable = function(params){
@@ -92,7 +110,8 @@ let setTable = function(params){
     })
 }
 
-var league_key = 'nfl.l.53605.t.9';
+var league_key = 'nhl.l.104406.t.1';
+//var league_key = 'nfl.l.53605.t.9';
 
 const yf = new YahooFantasy(
   "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
@@ -100,6 +119,12 @@ const yf = new YahooFantasy(
 )
 
 user_id = 'jgearhea@gmail.com';
+var last_waiver = '';
+//generate midnight for this purpose, otherwise timestamp is set
+last_waiver = new Date();
+last_waiver.setHours(0, 0, 0);
+timeStampIn = last_waiver.getTime();
+timeStampIn = Math.round(parseInt(timeStampIn)/1000);
 
 let newToken = getRefresh('AAE6y2HfIxKmf7NpFWQnGFhS0h_zHXHINwtW7jwvQXKGOU.pcZM1Y_tS0MY-');
 
@@ -122,8 +147,9 @@ newToken.then(function(result){
 
   yf.setUserToken(access_tokenOut);
 
+  const metaTX = getTransX(league_key,timeStampIn);
   //const metaOUT = getRoster(league_key);
-  const meta2 = getWaiverPlayersJet(league_key);
+  //const meta2 = getWaiverPlayersJet(league_key);
 
 });
 

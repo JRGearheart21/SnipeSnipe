@@ -30,7 +30,7 @@ wss.on("connection", ws => {
       var league_key = dataIn.toString().split("%%%")[0];
 
       //get roster (currently gets size of roster)
-      //const meta = getRoster(league_key,access_tokenOut,ws);    
+      const meta = getRoster(league_key,access_tokenOut,ws);    
 
       //get pending claims
       //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
@@ -83,7 +83,7 @@ const getTransactionsJet = async(league_key,access_token,ws) => {
     "1486c440b69b08065a4ae8c35b94785973d26873",
   )
   yf.setUserToken(access_token);
-
+  console.log(league_key);
   try {
     const meta = await yf.league.transactions(league_key);
     //JRG to do filter through transactions and move to AWS
