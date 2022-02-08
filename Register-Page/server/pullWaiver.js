@@ -120,9 +120,9 @@ const yf = new YahooFantasy(
 
 user_id = 'jgearhea@gmail.com';
 var last_waiver = '';
-//generate midnight for this purpose, otherwise timestamp is set
+//generate noon for this purpose, otherwise timestamp is set
 last_waiver = new Date();
-last_waiver.setHours(0, 0, 0);
+last_waiver.setHours(12, 0, 0);
 timeStampIn = last_waiver.getTime();
 timeStampIn = Math.round(parseInt(timeStampIn)/1000);
 
@@ -148,7 +148,7 @@ newToken.then(function(result){
   yf.setUserToken(access_tokenOut);
 
   const metaTX = getTransX(league_key,timeStampIn);
-  //const metaOUT = getRoster(league_key);
+  const metaOUT = getRoster(league_key);
   //const meta2 = getWaiverPlayersJet(league_key);
 
 });
