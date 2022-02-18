@@ -30,13 +30,14 @@ wss.on("connection", ws => {
       var league_key = dataIn.toString().split("%%%")[0];
 
       //get roster (currently gets size of roster)
-      const meta = getRoster(league_key,access_tokenOut,ws);    
+      //const meta = getRoster(league_key,access_tokenOut,ws);    
 
       //get pending claims
-      //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
+      const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
 
       //get waiver players claims
       //const waivRider = getWaiverPlayersJet(league_key,access_tokenOut,ws);
+
     }
   });
     
@@ -84,14 +85,15 @@ const getTransactionsJet = async(league_key,access_token,ws) => {
   )
   yf.setUserToken(access_token);
   console.log(league_key);
-  try {
-    const meta = await yf.league.transactions(league_key);
+   try {
+    const meta = await yf.league.transactions2(league_key);
     //JRG to do filter through transactions and move to AWS
     console.log(meta);
   } catch (e) {
     console.log(e.description);
     ws.send(e.description);
-  }
+  } 
+
 }
 
 const getWaiverPlayersJet = async(league_key,access_token,ws) => {
@@ -103,7 +105,7 @@ const getWaiverPlayersJet = async(league_key,access_token,ws) => {
 
   try {
     const meta = await yf.league.playersJRG(league_key);
-    console.log(meta.players.length);
+    console.log(meta.players);
   } catch (e) {
     console.log(e.description);
     ws.send(e.description);
