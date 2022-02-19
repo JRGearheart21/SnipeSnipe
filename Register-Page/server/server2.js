@@ -35,7 +35,7 @@ wss.on("connection", ws => {
       //get pending claims
       const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
 
-      //get waiver players claims
+      //get players on waivers
       //const waivRider = getWaiverPlayersJet(league_key,access_tokenOut,ws);
 
     }
@@ -87,7 +87,6 @@ const getTransactionsJet = async(league_key,access_token,ws) => {
   console.log(league_key);
    try {
     const meta = await yf.league.transactions2(league_key);
-    //JRG to do filter through transactions and move to AWS
     console.log(meta);
   } catch (e) {
     console.log(e.description);
