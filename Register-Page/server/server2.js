@@ -85,7 +85,7 @@ const getRoster = async(league_key,access_token,ws) => {
   //players on waivers
   try {
     //const meta = await yf.league.playersJRG(league_key);
-    console.log(meta.players);
+    //console.log(meta.players);
   } catch (e) {
     console.log(e.description);
   }
