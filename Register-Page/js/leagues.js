@@ -48,7 +48,7 @@ function numLeagues(user_id) {
     });
 } 
 
-function getTransactions(user_id,league_key) { 
+function getAWSTransactions(user_id,league_key) { 
     var waiverNames = ['waiverPlayer1','waiverPlayer2','waiverPlayer3','waiverPlayer4','waiverPlayer5'];
     var rosterNames = ['rosterPlayer1','rosterPlayer2','rosterPlayer3','rosterPlayer4','rosterPlayer5'];
     var FAStimes = ['FAS_time1','FAS_time2','FAS_time3','FAS_time4','FAS_time5'];
@@ -105,7 +105,7 @@ function getTransactions(user_id,league_key) {
     });
 }
 
-function getRoster(username,league_key1){
+function getRosterWaiverPlayersYahooClaims(username,league_key1){
     AWS.config.update({
         region: "us-east-2",
         accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -140,8 +140,6 @@ function getRoster(username,league_key1){
         }
     });
 }
-
-function getWaiverPlayers(){}
 
 function checkLeagueInfoValidity(user_id,league_idOut,team_idOut,sport_Out,access_valOut){
     AWS.config.update({

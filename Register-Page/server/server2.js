@@ -16,7 +16,8 @@ let awsConfig = {
 wss.on("connection", ws => {
   console.log("New client connected");
 
-  ws.on("message", dataIn => {       
+  ws.on("message", dataIn => {  
+
     if(dataIn.includes('$$$')){
       //get League Info for League addition on Profile
       var access_tokenOut = dataIn.toString().split("$$$")[1];
@@ -24,20 +25,14 @@ wss.on("connection", ws => {
       const meta = LeagueMeta(league_key,access_tokenOut,ws);
     } 
     else if(dataIn.includes('%%%')){
-      //get all necessary League information onLoad League page (Roster/Waiver/Pending Claims)
       //get access code and league key for mining
       var access_tokenOut = dataIn.toString().split("%%%")[1];
       var league_key = dataIn.toString().split("%%%")[0];
 
       //get roster (currently gets size of roster)
-      //const meta = getRoster(league_key,access_tokenOut,ws);    
-
-      //get pending claims
-      const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
-
-      //get players on waivers
+      const meta = getRoster(league_key,access_tokenOut,ws);   
       //const waivRider = getWaiverPlayersJet(league_key,access_tokenOut,ws);
-
+      //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
     }
   });
     
@@ -58,7 +53,6 @@ const LeagueMeta = async(league_key,access_token,ws) => {
     sendOutData(meta,ws);
   } catch (e) {
     console.log(e.description);
-    ws.send(e.description);
   }
 }
 
@@ -69,49 +63,35 @@ const getRoster = async(league_key,access_token,ws) => {
   )
   yf.setUserToken(access_token);
 
+  //getroster
   try {
     const meta = await yf.roster.players(league_key);
     console.log(meta.roster.length);
-  } catch (e) {
-    console.log(e.description);
-    ws.send(e.description);
-  }
-}
 
-const getTransactionsJet = async(league_key,access_token,ws) => {
-  const yf = new YahooFantasy(
-    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-    "1486c440b69b08065a4ae8c35b94785973d26873",
-  )
-  yf.setUserToken(access_token);
-  console.log(league_key);
-   try {
-    const meta = await yf.league.transactions2(league_key);
-    console.log(meta);
   } catch (e) {
     console.log(e.description);
-    ws.send(e.description);
+  }
+
+  //waiverclaims
+  try {
+    const meta = await yf.league.transactions2(league_key);
+    var txKey = meta.transactions[0].transaction_key;
+    console.log(txKey);
+    
+  } catch (e) {
+    console.log(e.description);
   } 
 
-}
-
-const getWaiverPlayersJet = async(league_key,access_token,ws) => {
-  const yf = new YahooFantasy(
-    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-    "1486c440b69b08065a4ae8c35b94785973d26873",
-  )
-  yf.setUserToken(access_token);
-
+  //players on waivers
   try {
-    const meta = await yf.league.playersJRG(league_key);
+    //const meta = await yf.league.playersJRG(league_key);
     console.log(meta.players);
   } catch (e) {
     console.log(e.description);
-    ws.send(e.description);
   }
+  sendOutData(txKey,ws);
 }
 
 function sendOutData(inData,ws){
-  console.log(inData);
-  ws.send("WORKS");
+  ws.send(inData);
 } 

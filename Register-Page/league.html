@@ -128,9 +128,10 @@
 						document.getElementById("league_idv").innerHTML = league_key;
 						document.getElementById("league").value = league_key;
 						document.getElementById("userVAL").value = checkOutval2;
-						getTransactions(checkOutval2,league_key);
-						getRoster(checkOutval2,league_key);
-						getWaiverPlayers(checkOutval2,league_key);
+						getAWSTransactions(checkOutval2,league_key);
+						
+						//combine these three together
+						getRosterWaiverPlayersYahooClaims(checkOutval2,league_key);
 						}
 					});			
 				});
