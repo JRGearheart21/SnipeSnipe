@@ -105,7 +105,10 @@ function getAWSTransactions(user_id,league_key) {
     });
 }
 
-function getRosterWaiverPlayersYahooClaims(username,league_key1){
+function getRosterWaiverPlayersYahooClaims(username,league_key1){ //finish parsing waiver claims and other info into website JRG
+    var yahoo_waiverNames = ['yahoo_waiverPlayer1','yahoo_waiverPlayer2','yahoo_waiverPlayer3','yahoo_waiverPlayer4','yahoo_waiverPlayer5'];
+    var yahoo_rosterNames = ['yahoo_rosterPlayer1','yahoo_rosterPlayer2','yahoo_rosterPlayer3','yahoo_rosterPlayer4','yahoo_rosterPlayer5'];
+
     AWS.config.update({
         region: "us-east-2",
         accessKeyId: "AKIASM2S677I6DGOD7OA",
@@ -136,17 +139,51 @@ function getRosterWaiverPlayersYahooClaims(username,league_key1){
                 });  
                 ws.addEventListener("message", function(messageEvent) { 
                     var obj = JSON.parse(messageEvent.data);
-                    //perform different functions based on resulting message JRG
+                    var i = 0;
+                    var looplen = 0;
+
                     if(obj[0].waiver_date!=undefined){
-                        console.log('waiver claims');
+                        console.log(' ');
+                        console.log('waiver claims: ');
+                        looplen = parseInt(obj.length);
+
+                        for(i=0;i<looplen;i++){
+
+                            if(obj[i].players.length<2){
+                                console.log(obj[i].transaction_key);
+                                console.log('add: ' + obj[i].players[0].name.full);
+                                console.log('drop no one');
+                                document.getElementById(yahoo_waiverNames[i]).value=obj[i].players[0].name.full;
+                                document.getElementById(yahoo_rosterNames[i]).value='No One';
+
+                            }
+                            else{
+                                console.log(obj[i].transaction_key);
+                                console.log('add: ' + obj[i].players[0].name.full);
+                                console.log('drop: ' + obj[i].players[1].name.full);
+                                document.getElementById(yahoo_waiverNames[i]).value=obj[i].players[0].name.full;
+                                document.getElementById(yahoo_rosterNames[i]).value=obj[i].players[1].name.full;
+
+                            }
+                        }
+                       
                     }
-                    else if(obj[0].selected_position!=undefined){
-                        console.log('roster');
+                    else if(obj[0].selected_position!=undefined){ //add roster players to search list JRG
+                        console.log(' ');
+                        console.log('roster: ');
+                        looplen = parseInt(obj.length);
+
+                        for(i=0;i<looplen;i++){
+                            console.log(obj[i].name.full);
+                        }
+
                     }
-                    else{
-                        console.log('players on waivers');
+                    else{ //add players on waivers to search list JRG
+                        console.log(' ');
+                        console.log('players on waivers: ');
+                        looplen = parseInt(obj.length);
+                        console.log(obj);
                     }
-                    console.log(obj);
                 });
         }
     });
