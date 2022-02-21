@@ -136,6 +136,7 @@ function getRosterWaiverPlayersYahooClaims(username,league_key1){
                 });  
                 ws.addEventListener("message", function(messageEvent) { 
                     var obj = JSON.parse(messageEvent.data);
+                    //perform different functions based on resulting message
                     console.log(obj);
                 });
         }

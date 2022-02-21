@@ -48,7 +48,7 @@ const LeagueMeta = async(league_key,access_token,ws) => {
 
   try {
     const meta = await yf.team.meta(league_key);
-    sendOutData(meta,ws);
+    sendOutData('WORKS',ws);
   } catch (e) {
     console.log(e.description);
   }
@@ -81,10 +81,19 @@ const getRoster = async(league_key,access_token,ws) => {
 
   //players on waivers
   try {
-    const meta3 = await yf.league.playersJRG(league_key);
-    //console.log(meta3.players);
+    var meta3 = await yf.league.playersJRG(league_key,0);
+    var initVAL = meta3.players.length;
     sendOutData(JSON.stringify(meta3.players),ws);
+    var count = initVAL;
 
+    while(initVAL >= 1 ){
+      var meta4 = await yf.league.playersJRG(league_key,count+1);
+
+      initVAL = meta4.players.length;
+      sendOutData(JSON.stringify(meta4.players),ws);
+      count = count + initVAL;
+    }
+    console.log('number of waiver players = ' + count);
   } catch (e) {
     console.log(e.description);
   }
