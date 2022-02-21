@@ -28,7 +28,6 @@ wss.on("connection", ws => {
       //get access code and league key for mining
       var access_tokenOut = dataIn.toString().split("%%%")[1];
       var league_key = dataIn.toString().split("%%%")[0];
-
       //get roster (currently gets size of roster)
       const meta = getRoster(league_key,access_tokenOut,ws);   
     }
@@ -90,8 +89,10 @@ const getRoster = async(league_key,access_token,ws) => {
       var meta4 = await yf.league.playersJRG(league_key,count+1);
 
       initVAL = meta4.players.length;
+      if(initVAL>=1){
       sendOutData(JSON.stringify(meta4.players),ws);
       count = count + initVAL;
+      }
     }
     console.log('number of waiver players = ' + count);
   } catch (e) {
