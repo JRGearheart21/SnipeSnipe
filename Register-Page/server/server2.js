@@ -31,8 +31,6 @@ wss.on("connection", ws => {
 
       //get roster (currently gets size of roster)
       const meta = getRoster(league_key,access_tokenOut,ws);   
-      //const waivRider = getWaiverPlayersJet(league_key,access_tokenOut,ws);
-      //const beezus = getTransactionsJet(league_key,access_tokenOut,ws);
     }
   });
     
@@ -65,9 +63,8 @@ const getRoster = async(league_key,access_token,ws) => {
 
   //getroster
   try {
-    const meta = await yf.roster.players(league_key);
-    //console.log(meta.roster.length);
-    sendOutData(JSON.stringify(meta.roster),ws);
+    const meta1 = await yf.roster.players(league_key);
+    sendOutData(JSON.stringify(meta1.roster),ws);
 
   } catch (e) {
     console.log(e.description);
@@ -75,11 +72,8 @@ const getRoster = async(league_key,access_token,ws) => {
 
   //waiverclaims
   try {
-    const meta = await yf.league.transactions2(league_key);
-    //var txKey = meta.transactions[0].transaction_key;
-    //console.log(txKey);
-    //console.log(JSON.stringify(meta));
-    sendOutData(JSON.stringify(meta.transactions),ws);
+    const meta2 = await yf.league.transactions2(league_key);
+    sendOutData(JSON.stringify(meta2.transactions),ws);
 
   } catch (e) {
     console.log(e.description);
@@ -87,8 +81,10 @@ const getRoster = async(league_key,access_token,ws) => {
 
   //players on waivers
   try {
-    //const meta = await yf.league.playersJRG(league_key);
-    //console.log(meta.players);
+    const meta3 = await yf.league.playersJRG(league_key);
+    //console.log(meta3.players);
+    sendOutData(JSON.stringify(meta3.players),ws);
+
   } catch (e) {
     console.log(e.description);
   }
