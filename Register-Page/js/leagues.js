@@ -136,7 +136,16 @@ function getRosterWaiverPlayersYahooClaims(username,league_key1){
                 });  
                 ws.addEventListener("message", function(messageEvent) { 
                     var obj = JSON.parse(messageEvent.data);
-                    //perform different functions based on resulting message
+                    //perform different functions based on resulting message JRG
+                    if(obj[0].waiver_date!=undefined){
+                        console.log('waiver claims');
+                    }
+                    else if(obj[0].selected_position!=undefined){
+                        console.log('roster');
+                    }
+                    else{
+                        console.log('players on waivers');
+                    }
                     console.log(obj);
                 });
         }
