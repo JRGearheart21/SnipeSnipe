@@ -66,7 +66,8 @@ const getRoster = async(league_key,access_token,ws) => {
   //getroster
   try {
     const meta = await yf.roster.players(league_key);
-    console.log(meta.roster.length);
+    //console.log(meta.roster.length);
+    sendOutData(JSON.stringify(meta.roster),ws);
 
   } catch (e) {
     console.log(e.description);
@@ -75,9 +76,11 @@ const getRoster = async(league_key,access_token,ws) => {
   //waiverclaims
   try {
     const meta = await yf.league.transactions2(league_key);
-    var txKey = meta.transactions[0].transaction_key;
-    console.log(txKey);
-    
+    //var txKey = meta.transactions[0].transaction_key;
+    //console.log(txKey);
+    //console.log(JSON.stringify(meta));
+    sendOutData(JSON.stringify(meta.transactions),ws);
+
   } catch (e) {
     console.log(e.description);
   } 
@@ -89,7 +92,6 @@ const getRoster = async(league_key,access_token,ws) => {
   } catch (e) {
     console.log(e.description);
   }
-  sendOutData(txKey,ws);
 }
 
 function sendOutData(inData,ws){
