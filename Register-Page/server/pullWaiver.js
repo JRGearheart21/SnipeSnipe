@@ -111,17 +111,17 @@ let setTable = function(params){
 }
 
 //var league_key = 'nhl.l.104406.t.1';
-//var league_key = 'nhl.l.104406.t.3';
+var league_key = 'nhl.l.104406.t.3';
 
-var league_key = 'nfl.l.53605.t.9';
+//var league_key = 'nfl.l.53605.t.9';
 
 const yf = new YahooFantasy(
   "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
   "1486c440b69b08065a4ae8c35b94785973d26873",
 )
 
-//user_id = 'john.gearheart@gmail.com';
-user_id = 'jgearhea@gmail.com';
+user_id = 'john.gearheart@gmail.com';
+//user_id = 'jgearhea@gmail.com';
 
 var last_waiver = '';
 //generate noon for this purpose, otherwise timestamp is set
@@ -130,8 +130,8 @@ last_waiver.setHours(12, 0, 0);
 timeStampIn = last_waiver.getTime();
 timeStampIn = Math.round(parseInt(timeStampIn)/1000);
 
-let newToken = getRefresh('AAE6y2HfIxKmf7NpFWQnGFhS0h_zHXHINwtW7jwvQXKGOU.pcZM1Y_tS0MY-');
-//let newToken = getRefresh('AEsED2IWsmXKF5wDeRciTHBpbJBWVRU4CqyW5Qowlte8hcvhzs_1PpSymJMam0ky'); //john.gearheart
+//let newToken = getRefresh('AAE6y2HfIxKmf7NpFWQnGFhS0h_zHXHINwtW7jwvQXKGOU.pcZM1Y_tS0MY-');
+let newToken = getRefresh('AEsED2IWsmXKF5wDeRciTHBpbJBWVRU4CqyW5Qowlte8hcvhzs_1PpSymJMam0ky'); //john.gearheart
                           
 newToken.then(function(result){
   access_tokenOut = result.data.access_token;
@@ -152,9 +152,9 @@ newToken.then(function(result){
 
   yf.setUserToken(access_tokenOut);
 
-  const metaTX = getTransX(league_key,timeStampIn);
-  //const metaOUT = getRoster(league_key);
-  const meta2 = getWaiverPlayersJet(league_key);
+  //const metaTX = getTransX(league_key,timeStampIn);
+  const metaOUT = getRoster(league_key);
+  //const meta2 = getWaiverPlayersJet(league_key);
 
 });
 

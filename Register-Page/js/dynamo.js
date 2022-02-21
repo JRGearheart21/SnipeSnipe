@@ -237,6 +237,7 @@ function checkForRefreshToken(user_id){
     responseOut = docClient.get(params, function(err, data) {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
+            console.log('this is where you errored -- dynamo ln 240');
         } else {
           checkOutval = responseOut.response.data.Item.refresh_token;
           if((checkOutval!='')&&(checkOutval!=undefined)){
@@ -251,8 +252,8 @@ function checkForRefreshToken(user_id){
 }   
 
 function openVerify(user_id){
-    var ngrokport = '8e7b';
-    window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9ektRV0Z6dExNdTJqJmQ9WVdrOVkxWTBSMGRoTmpBbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTU5&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
+    var ngrokport = '3ef7';
+    window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9WlhwU0tuNkxnZUx0JmQ9WVdrOWNWaHdNVzVpZDFjbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWJi&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
 }
 
 function openProfile(){
