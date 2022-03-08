@@ -40,8 +40,8 @@ wss.on("connection", ws => {
 
 const LeagueMeta = async(league_key,access_token,ws) => {
   const yf = new YahooFantasy(
-    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-    "1486c440b69b08065a4ae8c35b94785973d26873",
+    "dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2",
+    "cc521b84adf690ea9deec59cd1f7ba78015aaede",
   )
   yf.setUserToken(access_token);
 
@@ -55,8 +55,8 @@ const LeagueMeta = async(league_key,access_token,ws) => {
 
 const getRoster = async(league_key,access_token,ws) => {
   const yf = new YahooFantasy(
-    "dj0yJmk9aXFpekN0NHQ0YWN1JmQ9WVdrOVZqSTVVM0ZDZEc0bWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PTll",
-    "1486c440b69b08065a4ae8c35b94785973d26873",
+    "dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2",
+    "cc521b84adf690ea9deec59cd1f7ba78015aaede",
   )
   yf.setUserToken(access_token);
 

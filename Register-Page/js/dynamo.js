@@ -217,36 +217,49 @@ function checkForRefreshToken(user_id){
       secretAccessKey: "8u5WEJ2LRUFWEZpk4g6RpzKQvIwUZHHSFTnk5439"
     });
 
-  var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = new AWS.DynamoDB.DocumentClient();
 
-  var data = { 
-      UserPoolId : _config.cognito.userPoolId,
-      ClientId : _config.cognito.clientId
-  };
-  var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
-  var cognitoUser = userPool.getCurrentUser(); 
+    var data = { 
+        UserPoolId : _config.cognito.userPoolId,
+        ClientId : _config.cognito.clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+    var cognitoUser = userPool.getCurrentUser(); 
 
-  var params = {
-      TableName :"fasniper_users",
-      Key:{
-          "fas_user_ID": user_id,
-          "AWS_client_ID": user_id
-      }
-  };
+    var params = {
+        TableName :"fasniper_users",
+        Key:{
+            "fas_user_ID": user_id,
+            "AWS_client_ID": user_id
+        }
+    };
 
     responseOut = docClient.get(params, function(err, data) {
         if (err) {
             console.log("error"+ JSON.stringify(err,null,2));
             console.log('this is where you errored -- dynamo ln 240');
         } else {
-          checkOutval = responseOut.response.data.Item.refresh_token;
-          if((checkOutval!='')&&(checkOutval!=undefined)){
+            checkOutval = responseOut.response.data.Item.refresh_token;
+            if((checkOutval!='')&&(checkOutval!=undefined)){
             insertUser(user_id,"REFRESH"+checkOutval);
-          }
-          else{
+            }
+            else{
             openVerify(user_id);
-          }
-          openProfile();
+            }
+            
+            //JRG
+            const ws = new WebSocket("ws://localhost:1217");
+    
+            ws.addEventListener("open",() => {
+                console.log("We are now connected");
+                ws.send(user_id + '###'+ checkOutval);
+                window.close();
+                openProfile();
+            });
+
+            //JRG
+            //openProfile();
+
         }
     });
 }   
