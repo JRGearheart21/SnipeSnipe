@@ -13,8 +13,8 @@ const wss = new WebSocket.Server({port: 8083});
 let awsConfig = {
   "region" : "us-east-2",
   "endpoint": "http://dynamodb.us-east-2.amazonaws.com",
-  "accessKeyId":"AKIASM2S677I6DGOD7OA",
-  "secretAccessKey":"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"
+  "accessKeyId":"AKIASM2S677I3SOLX2WG",
+  "secretAccessKey":"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"
 };
 
 wss.on("connection", ws => {
@@ -81,7 +81,7 @@ wss.on("connection", ws => {
 
 
 let getAuth = function(dataIn){
-      valstring = Buffer.from(`dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2:cc521b84adf690ea9deec59cd1f7ba78015aaede`, `binary`).toString(`base64`);
+      valstring = Buffer.from(`dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx:93d4fef055c7c539e563491cb31cd9dfcfe49dd0`, `binary`).toString(`base64`);
       return axios({
         url: `https://api.login.yahoo.com/oauth2/get_token`,
         method: "post",
@@ -91,8 +91,8 @@ let getAuth = function(dataIn){
           "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
         },
         data: qs.stringify({
-          client_id: "dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2",
-          client_secret: "cc521b84adf690ea9deec59cd1f7ba78015aaede",
+          client_id: "dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx",
+          client_secret: "93d4fef055c7c539e563491cb31cd9dfcfe49dd0",
           redirect_uri: "oob",
           code: dataIn,
           grant_type: "authorization_code",
@@ -105,7 +105,7 @@ let getAuth = function(dataIn){
 }
 
 let displayLeagueInfo = function(dataIn){
-  valstring = Buffer.from(`dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2:cc521b84adf690ea9deec59cd1f7ba78015aaede`, `binary`).toString(`base64`);
+  valstring = Buffer.from(`dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx:93d4fef055c7c539e563491cb31cd9dfcfe49dd0`, `binary`).toString(`base64`);
   return axios({
     url: `https://api.login.yahoo.com/oauth2/get_token`,
     method: "post",
@@ -115,8 +115,8 @@ let displayLeagueInfo = function(dataIn){
       "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
     },
     data: qs.stringify({
-      client_id: "dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2",
-      client_secret: "cc521b84adf690ea9deec59cd1f7ba78015aaede",
+      client_id: "dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx",
+      client_secret: "93d4fef055c7c539e563491cb31cd9dfcfe49dd0",
       redirect_uri: "oob",
       code: dataIn,
       grant_type: "authorization_code",
@@ -129,7 +129,7 @@ let displayLeagueInfo = function(dataIn){
 }
 
 let getRefresh = function(dataIn){
-  valstring = Buffer.from(`dj0yJmk9emE3blNFNkJta1ZoJmQ9WVdrOVNWTlBVWEZ2TkdRbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2:cc521b84adf690ea9deec59cd1f7ba78015aaede`, `binary`).toString(`base64`);
+  valstring = Buffer.from(`dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx:93d4fef055c7c539e563491cb31cd9dfcfe49dd0`, `binary`).toString(`base64`);
   return axios({
     url: `https://api.login.yahoo.com/oauth2/get_token`,
     method: "post",

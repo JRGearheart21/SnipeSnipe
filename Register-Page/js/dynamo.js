@@ -5,8 +5,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.j
 function insertNewUser(user_id) {
     AWS.config.update({
         region: "us-east-2",
-        accessKeyId: "AKIASM2S677I6DGOD7OA",
-        secretAccessKey: "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"
+        accessKeyId: "AKIASM2S677I3SOLX2WG",
+        secretAccessKey: "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"
     });
     var docClient = new AWS.DynamoDB.DocumentClient();
     var data = { 
@@ -20,7 +20,12 @@ function insertNewUser(user_id) {
         Item:{
             "fas_user_ID": user_id.username,
             "AWS_client_ID": user_id.username,
-            "num_leagues": 0
+            "num_leagues": 0,
+            "access_token": '',
+            "refresh_token": '',
+            "league_id": '',
+            "team_id":'',
+            "sport":''
         }
     };
     docClient.put(params, function(err, data) {
@@ -41,7 +46,7 @@ function insertUser(user_id, auth_code) {
     ws.addEventListener("open",() => {
         console.log("We are now connected");
         ws.send(user_id + '&&'+ auth_code);
-        window.close();
+        openProfile(); 
     });
     ws.addEventListener("message",() => {
         console.log("pong");
@@ -258,15 +263,15 @@ function checkForRefreshToken(user_id){
             });
 
             //JRG
-            //openProfile();
+            openProfile();
 
         }
     });
 }   
 
 function openVerify(user_id){
-    var ngrokport = '3ef7';
-    window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9WlhwU0tuNkxnZUx0JmQ9WVdrOWNWaHdNVzVpZDFjbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWJi&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
+    var ngrokport = '6b68';
+    window.open('https://api.login.yahoo.com/oauth2/request_auth?client_id=dj0yJmk9NVRBdG1ySXVzdjJyJmQ9WVdrOU4yVjVTakV4TkdnbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWMx&redirect_uri=https%3A%2F%2F'+ngrokport+'-142-79-192-214.ngrok.io%2FRegister-Page%2Fredirected.html&response_type=code&language=en-us&state='+ user_id);
 }
 
 function openProfile(){
